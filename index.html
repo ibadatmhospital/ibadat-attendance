@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBADAT Hospital Attendance</title>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 15px;
+      background: #f3f7f9;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .header {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 15px #ccc;
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+    }
+
+    h1 {
+      margin: 8px 0;
+      font-size: 25px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: normal;
+    }
+
+    #reader {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      border-radius: 18px;
+      padding: 10px;
+    }
+
+    #result {
+      max-width: 500px;
+      margin: 15px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 18px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .ready { color: #00695c; }
+    .success { color: #008060; }
+    .error { color: #c62828; }
+    .processing { color: #ef6c00; }
+  </style>
+</head>
+
+<body>
+
+<div class="header">
+
+  <img
+    class="logo"
+    src="https://i.postimg.cc/FzBHcKJx/Whats-App-Image-2026-04-20-at-3-26-15-PM-(1).png"
+  >
+
+  <h1>IBADAT HOSPITAL</h1>
+  <h2>Attendance Scanner</h2>
+
+</div>
+
+<div id="reader"></div>
+
+<div id="result" class="ready">
+  📷 READY TO SCAN
+</div>
+
+<script>
+
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbymIUtdsG9jhl3RjcL3sxIFL5_AbYELjFK0Vnv0soE4pKsesEU9AQ2iDPf6VExpjzvt0w/exec";
+
+let scanningLocked = false;
+
+function startScanner() {
+
+  const scanner = new Html5Qrcode("reader");
+
+  scanner.start(
+    { facingMode: "environment" },
+
+    {
+      fps: 10,
+      qrbox: {
+        width: 250,
+        height: 250
+      }
+    },
+
+    function(decodedText) {
+
+      if (scanningLocked) return;
+
+      const staffId = extractStaffId(decodedText);
+
+      if (!staffId) {
+        showResult("❌ Invalid Staff QR Code", "error");
+        return;
+      }
+
+      scanningLocked = true;
+
+      showResult(
+        "⏳ Processing...<br>Staff ID: " + staffId,
+        "processing"
+      );
+
+      sendAttendance(staffId);
+    }
+
+  ).catch(function(error) {
+
+    showResult(
+      "❌ Camera Error<br><br>" + error,
+      "error"
+    );
+
+  });
+}
+
+
+function extractStaffId(text) {
+
+  text = String(text).trim();
+
+  try {
+
+    const url = new URL(text);
+
+    const id = url.searchParams.get("id");
+
+    if (id) return id.trim();
+
+  } catch (e) {}
+
+  if (
+    text.length > 0 &&
+    text.length < 100 &&
+    !text.includes(" ")
+  ) {
+    return text;
+  }
+
+  return null;
+}
+
+
+function sendAttendance(staffId) {
+
+  const url =
+    GOOGLE_SCRIPT_URL +
+    "?action=attendance&staffId=" +
+    encodeURIComponent(staffId);
+
+  fetch(url)
+
+    .then(response => response.text())
+
+    .then(result => {
+
+      showResult(result, "success");
+
+      setTimeout(function() {
+
+        scanningLocked = false;
+
+        showResult(
+          "📷 READY TO SCAN",
+          "ready"
+        );
+
+      }, 4000);
+
+    })
+
+    .catch(function(error) {
+
+      showResult(
+        "❌ Connection Error<br><br>" + error,
+        "error"
+      );
+
+      setTimeout(function() {
+
+        scanningLocked = false;
+
+        showResult(
+          "📷 READY TO SCAN",
+          "ready"
+        );
+
+      }, 4000);
+
+    });
+}
+
+
+function showResult(message, type) {
+
+  const result =
+    document.getElementById("result");
+
+  result.innerHTML = message;
+  result.className = type;
+}
+
+
+startScanner();
+
+</script>
+
+</body>
+</html>
