@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>IBADAT Hospital Attendance</title>
 
   <script src="https://unpkg.com/html5-qrcode"></script>
@@ -10,80 +11,89 @@
   <style>
     body {
       margin: 0;
-      padding: 15px;
-      background: #f3f7f9;
+      padding: 20px;
       font-family: Arial, sans-serif;
+      background: #f5f7fa;
       text-align: center;
     }
 
-    .header {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 15px;
-      box-shadow: 0 3px 15px #ccc;
-    }
-
-    .logo {
-      width: 90px;
-      height: 90px;
-      object-fit: contain;
-    }
-
-    h1 {
-      margin: 8px 0;
-      font-size: 25px;
-    }
-
-    h2 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: normal;
-    }
-
-    #reader {
+    .container {
       max-width: 500px;
       margin: auto;
       background: white;
-      border-radius: 18px;
-      padding: 10px;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+    }
+
+    h1 {
+      margin: 5px 0;
+      font-size: 26px;
+    }
+
+    h2 {
+      margin: 5px 0 20px;
+      font-size: 18px;
+      color: #555;
+    }
+
+    #reader {
+      width: 100%;
+      margin: auto;
     }
 
     #result {
-      max-width: 500px;
-      margin: 15px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 18px;
-      font-size: 20px;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 18px;
       font-weight: bold;
     }
 
-    .ready { color: #00695c; }
-    .success { color: #008060; }
-    .error { color: #c62828; }
-    .processing { color: #ef6c00; }
+    .ready {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .processing {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .success {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .device {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #777;
+      word-break: break-all;
+    }
   </style>
 </head>
 
 <body>
 
-<div class="header">
-
-  <img
-    class="logo"
-    src="https://i.postimg.cc/FzBHcKJx/Whats-App-Image-2026-04-20-at-3-26-15-PM-(1).png"
-  >
+<div class="container">
 
   <h1>IBADAT HOSPITAL</h1>
-  <h2>Attendance Scanner</h2>
+  <h2>Staff Attendance System</h2>
 
-</div>
+  <div id="reader"></div>
 
-<div id="reader"></div>
+  <div id="result" class="ready">
+    📷 READY TO SCAN
+  </div>
 
-<div id="result" class="ready">
-  📷 READY TO SCAN
+  <div class="device" id="deviceInfo"></div>
+
 </div>
 
 <script>
@@ -93,15 +103,54 @@ const GOOGLE_SCRIPT_URL =
 
 let scanningLocked = false;
 
+
+// ==========================================
+// DEVICE ID
+// ==========================================
+
+function getDeviceId() {
+
+  let deviceId = localStorage.getItem("IBADAT_DEVICE_ID");
+
+  if (!deviceId) {
+
+    deviceId =
+      "DEVICE-" +
+      Date.now() +
+      "-" +
+      Math.random().toString(36).substring(2, 8);
+
+    localStorage.setItem(
+      "IBADAT_DEVICE_ID",
+      deviceId
+    );
+  }
+
+  return deviceId;
+}
+
+
+const DEVICE_ID = getDeviceId();
+
+document.getElementById("deviceInfo").innerHTML =
+  "Device ID: " + DEVICE_ID;
+
+
+// ==========================================
+// START QR SCANNER
+// ==========================================
+
 function startScanner() {
 
   const scanner = new Html5Qrcode("reader");
 
   scanner.start(
+
     { facingMode: "environment" },
 
     {
       fps: 10,
+
       qrbox: {
         width: 250,
         height: 250
@@ -115,18 +164,24 @@ function startScanner() {
       const staffId = extractStaffId(decodedText);
 
       if (!staffId) {
-        showResult("❌ Invalid Staff QR Code", "error");
+
+        showResult(
+          "❌ Invalid Staff QR Code",
+          "error"
+        );
+
         return;
       }
 
       scanningLocked = true;
 
       showResult(
-        "⏳ Processing...<br>Staff ID: " + staffId,
+        "⏳ Processing...<br><br>Staff ID: " + staffId,
         "processing"
       );
 
       sendAttendance(staffId);
+
     }
 
   ).catch(function(error) {
@@ -137,8 +192,13 @@ function startScanner() {
     );
 
   });
+
 }
 
+
+// ==========================================
+// EXTRACT STAFF ID FROM QR
+// ==========================================
 
 function extractStaffId(text) {
 
@@ -150,15 +210,19 @@ function extractStaffId(text) {
 
     const id = url.searchParams.get("id");
 
-    if (id) return id.trim();
+    if (id) {
+      return id.trim();
+    }
 
   } catch (e) {}
 
+  // If QR contains plain Staff ID
   if (
     text.length > 0 &&
     text.length < 100 &&
     !text.includes(" ")
   ) {
+
     return text;
   }
 
@@ -166,55 +230,101 @@ function extractStaffId(text) {
 }
 
 
+// ==========================================
+// SEND ATTENDANCE
+// JSONP - NO FETCH / NO CORS ERROR
+// ==========================================
+
 function sendAttendance(staffId) {
+
+  const callbackName =
+    "attendanceCallback_" +
+    Date.now();
+
+  const script =
+    document.createElement("script");
 
   const url =
     GOOGLE_SCRIPT_URL +
-    "?action=attendance&staffId=" +
-    encodeURIComponent(staffId);
+    "?mode=attendance" +
+    "&staffId=" +
+    encodeURIComponent(staffId) +
+    "&deviceId=" +
+    encodeURIComponent(DEVICE_ID) +
+    "&callback=" +
+    callbackName;
 
-  fetch(url)
+  window[callbackName] = function(result) {
 
-    .then(response => response.text())
+    showResult(
+      result,
+      "success"
+    );
 
-    .then(result => {
+    cleanup();
 
-      showResult(result, "success");
+    setTimeout(function() {
 
-      setTimeout(function() {
-
-        scanningLocked = false;
-
-        showResult(
-          "📷 READY TO SCAN",
-          "ready"
-        );
-
-      }, 4000);
-
-    })
-
-    .catch(function(error) {
+      scanningLocked = false;
 
       showResult(
-        "❌ Connection Error<br><br>" + error,
-        "error"
+        "📷 READY TO SCAN",
+        "ready"
       );
 
-      setTimeout(function() {
+    }, 4000);
 
-        scanningLocked = false;
+  };
 
-        showResult(
-          "📷 READY TO SCAN",
-          "ready"
-        );
 
-      }, 4000);
+  script.onerror = function() {
 
-    });
+    showResult(
+      "❌ Connection Error<br><br>" +
+      "Cannot connect to attendance server.",
+      "error"
+    );
+
+    cleanup();
+
+    setTimeout(function() {
+
+      scanningLocked = false;
+
+      showResult(
+        "📷 READY TO SCAN",
+        "ready"
+      );
+
+    }, 4000);
+
+  };
+
+
+  function cleanup() {
+
+    if (script.parentNode) {
+      script.parentNode.removeChild(script);
+    }
+
+    try {
+      delete window[callbackName];
+    } catch (e) {
+      window[callbackName] = undefined;
+    }
+
+  }
+
+
+  script.src = url;
+
+  document.body.appendChild(script);
 }
 
+
+// ==========================================
+// SHOW RESULT
+// ==========================================
 
 function showResult(message, type) {
 
@@ -222,9 +332,14 @@ function showResult(message, type) {
     document.getElementById("result");
 
   result.innerHTML = message;
+
   result.className = type;
 }
 
+
+// ==========================================
+// START
+// ==========================================
 
 startScanner();
 
