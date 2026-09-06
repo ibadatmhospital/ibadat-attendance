@@ -1115,7 +1115,6 @@ function showAttendanceResult(response){
 /* =====================================================
    SHOW RESULT
 ===================================================== */
-
 function showResult(
   icon,
   iconClass,
@@ -1124,51 +1123,33 @@ function showResult(
   data
 ){
 
-  document.getElementById(
-    "scannerCard"
-  ).style.display = "none";
+  // Hide scanner and show result
+  document.getElementById("scannerCard").style.display = "none";
+  document.getElementById("resultCard").style.display = "block";
 
+  const iconEl = document.getElementById("resultIcon");
 
-  document.getElementById(
-    "resultCard"
-  ).style.display = "block";
+  iconEl.className = "result-icon " + iconClass;
+  iconEl.innerHTML = icon;
 
+  document.getElementById("resultTitle").innerText = title;
 
-  const iconEl =
-    document.getElementById("resultIcon");
+  document.getElementById("resultMessage").innerText = message;
 
-  iconEl.className =
-    "result-icon " + iconClass;
-
-  iconEl.innerHTML =
-    icon;
-
-
-  document.getElementById(
-    "resultTitle"
-  ).innerText =
-    title;
-
-
-  document.getElementById(
-    "resultMessage"
-  ).innerText =
-    message;
-
-
+  // Fill staff information
   fillResultData(data);
 
-  isProcessing = false;
+  // IMPORTANT:
+  // Keep processing ON while result is displayed.
+  // This prevents another QR scan during these 10 seconds.
+  isProcessing = true;
 
-
-  // Update summary immediately
+  // Update today's summary
   loadTodaySummary();
 
   // Automatically return to scanner after 10 seconds
   startAutoNextScan();
-
 }
-
 
 /* =====================================================
    ERROR
