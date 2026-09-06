@@ -1092,7 +1092,38 @@ function showAttendanceResult(response){
       "Today's attendance is already completed.",
       response
     );
+function startNextScanCountdown() {
 
+  let seconds = 10;
+
+  const countdown =
+    document.getElementById("countdown");
+
+  if (countdown) {
+    countdown.innerText =
+      "Next scan in " + seconds + " seconds...";
+  }
+
+  const timer = setInterval(function() {
+
+    seconds--;
+
+    if (countdown) {
+      countdown.innerText =
+        "Next scan in " + seconds + " seconds...";
+    }
+
+    if (seconds <= 0) {
+
+      clearInterval(timer);
+
+      resetScannerForNextPerson();
+
+    }
+
+  }, 1000);
+
+}
     return;
 
   }
