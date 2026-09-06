@@ -602,12 +602,162 @@ function updateClock(){
 
   const now = new Date();
 
+  // Afghanistan / Kabul time
+  const afghanistanDate =
+    new Intl.DateTimeFormat(
+      "en-US",
+      {
+        timeZone: "Asia/Kabul",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric"
+      }
+    ).formatToParts(now);
+
+  let year = 0;
+  let month = 0;
+  let day = 0;
+
+  afghanistanDate.forEach(function(part){
+
+    if(part.type === "year"){
+      year = Number(part.value);
+    }
+
+    if(part.type === "month"){
+      month = Number(part.value);
+    }
+
+    if(part.type === "day"){
+      day = Number(part.value);
+    }
+
+  });
+
+
+  // Convert Gregorian → Afghanistan Solar Hijri
+  const solar =
+    gregorianToSolar(year, month, day);
+
+
   document.getElementById("liveDate").innerText =
-    now.toLocaleDateString();
+    solar.year + "/" +
+    solar.month + "/" +
+    solar.day;
 
+
+  // Afghanistan time
   document.getElementById("liveTime").innerText =
-    now.toLocaleTimeString();
+    new Intl.DateTimeFormat(
+      "en-US",
+      {
+        timeZone: "Asia/Kabul",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      }
+    ).format(now);
 
+}
+
+
+/* =========================================
+   GREGORIAN → AFGHANISTAN SOLAR HIJRI
+========================================= */
+
+function gregorianToSolar(gy, gm, gd){
+
+  let g_d_m = [
+    0,
+    31,
+    59,
+    90,
+    120,
+    151,
+    181,
+    212,
+    243,
+    273,
+    304,
+    334
+  ];
+
+  let gy2 =
+    (gm > 2) ? (gy + 1) : gy;
+
+  let days =
+    355666 +
+    (365 * gy) +
+    Math.floor((gy2 + 3) / 4) -
+    Math.floor((gy2 + 99) / 100) +
+    Math.floor((gy2 + 399) / 400) +
+    gd +
+    g_d_m[gm - 1];
+
+  let jy =
+    -1595 +
+    (33 * Math.floor(days / 12053));
+
+  days %= 12053;
+
+  jy +=
+    4 * Math.floor(days / 1461);
+
+  days %= 1461;
+
+  if(days > 365){
+
+    jy +=
+      Math.floor((days - 1) / 365);
+
+    days =
+      (days - 1) % 365;
+
+  }
+
+  let jm;
+  let jd;
+
+  if(days < 186){
+
+    jm =
+      1 +
+      Math.floor(days / 31);
+
+    jd =
+      1 +
+      (days % 31);
+
+  }else{
+
+    jm =
+      7 +
+      Math.floor((days - 186) / 30);
+
+    jd =
+      1 +
+      ((days - 186) % 30);
+
+  }
+
+  return {
+    year: jy,
+    month: jm,
+    day: jd
+  };
+
+}
+
+
+/* START CLOCK */
+
+updateClock();
+
+setInterval(
+  updateClock,
+  1000
+);
 }
 
 updateClock();
