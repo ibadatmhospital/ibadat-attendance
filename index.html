@@ -2,18 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width,
-                 initial-scale=1.0,
-                 maximum-scale=1.0,
-                 user-scalable=no">
 
-  <title>IBADAT Hospital - Attendance Scanner</title>
+  <meta
+    name="viewport"
+    content="width=device-width,
+             initial-scale=1.0,
+             maximum-scale=1.0,
+             user-scalable=no"
+  >
+
+  <title>IBADAT Hospital - Staff Attendance</title>
 
   <!-- QR Scanner Library -->
   <script src="https://unpkg.com/html5-qrcode"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -23,696 +27,1965 @@
       margin: 0;
       padding: 0;
       width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100%;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
     }
 
+
+    /* ==========================================
+       BODY
+    ========================================== */
+
     body {
-      background-image:
+
+      min-height: 100vh;
+
+      background:
         linear-gradient(
-          rgba(0, 0, 0, 0.48),
-          rgba(0, 0, 0, 0.58)
+          rgba(5, 25, 45, 0.92),
+          rgba(10, 45, 75, 0.90)
         ),
         url("hospital.jpeg");
 
       background-size: cover;
+
       background-position: center;
-      background-repeat: no-repeat;
+
+      background-attachment: fixed;
 
       display: flex;
-      justify-content: center;
-      align-items: center;
-    }
 
-    .main-container {
-      width: 100%;
-      max-width: 520px;
-      min-height: 100vh;
-
-      display: flex;
-      flex-direction: column;
       justify-content: center;
+
       align-items: center;
 
       padding: 20px;
+
     }
 
-    /* Hospital Header */
-    .header {
+
+    /* ==========================================
+       MAIN CONTAINER
+    ========================================== */
+
+    .main-container {
+
+      width: 100%;
+
+      max-width: 500px;
+
       text-align: center;
-      color: white;
-      margin-bottom: 18px;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+
     }
+
+
+    /* ==========================================
+       HEADER
+    ========================================== */
+
+    .header {
+
+      color: white;
+
+      margin-bottom: 18px;
+
+    }
+
+
+    .hospital-logo {
+
+      width: 62px;
+
+      height: 62px;
+
+      margin: 0 auto 10px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255,255,255,0.15);
+
+      border:
+        2px solid
+        rgba(255,255,255,0.5);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 30px;
+
+    }
+
 
     .hospital-name {
-      font-size: 32px;
-      font-weight: bold;
+
+      font-size: 30px;
+
+      font-weight: 800;
+
       letter-spacing: 1px;
-      margin-bottom: 5px;
+
     }
+
 
     .system-name {
-      font-size: 18px;
-      font-weight: 500;
-    }
 
-    .subtitle {
+      margin-top: 5px;
+
       font-size: 14px;
-      margin-top: 7px;
+
+      letter-spacing: 2px;
+
       opacity: 0.9;
+
     }
 
-    /* Scanner Box */
+
+    .live-info {
+
+      margin-top: 14px;
+
+      display: flex;
+
+      justify-content: center;
+
+      gap: 10px;
+
+      flex-wrap: wrap;
+
+    }
+
+
+    .info-pill {
+
+      background:
+        rgba(255,255,255,0.13);
+
+      border:
+        1px solid
+        rgba(255,255,255,0.18);
+
+      padding:
+        7px 12px;
+
+      border-radius: 20px;
+
+      font-size: 12px;
+
+    }
+
+
+    /* ==========================================
+       SCANNER CARD
+    ========================================== */
+
     .scanner-card {
-      width: 100%;
-      max-width: 430px;
 
-      background: rgba(255,255,255,0.96);
+      background: white;
 
-      border-radius: 22px;
+      border-radius: 25px;
 
       padding: 18px;
 
       box-shadow:
-        0 15px 40px rgba(0,0,0,0.35);
+        0 20px 50px
+        rgba(0,0,0,0.35);
 
-      text-align: center;
+      animation:
+        fadeIn
+        0.4s ease;
+
     }
+
 
     .scanner-title {
-      font-size: 21px;
+
+      font-size: 19px;
+
       font-weight: bold;
-      margin-bottom: 12px;
-      color: #222;
+
+      color: #172b4d;
+
+      margin-bottom: 14px;
+
     }
+
 
     #reader {
+
       width: 100%;
-      border-radius: 15px;
+
       overflow: hidden;
+
+      border-radius: 18px;
+
       background: #111;
+
     }
 
-    /* Status */
-    #status {
-      margin-top: 15px;
-      min-height: 45px;
+
+    /* ==========================================
+       RESULT CARD
+    ========================================== */
+
+    #resultCard {
+
+      display: none;
+
+      background: white;
+
+      border-radius: 25px;
+
+      padding: 28px 20px;
+
+      box-shadow:
+        0 20px 50px
+        rgba(0,0,0,0.35);
+
+      animation:
+        resultShow
+        0.4s ease;
+
+    }
+
+
+    @keyframes resultShow {
+
+      from {
+
+        transform:
+          scale(0.94);
+
+        opacity: 0;
+
+      }
+
+      to {
+
+        transform:
+          scale(1);
+
+        opacity: 1;
+
+      }
+
+    }
+
+
+    /* ==========================================
+       RESULT ICON
+    ========================================== */
+
+    .result-icon {
+
+      width: 75px;
+
+      height: 75px;
+
+      border-radius: 50%;
+
+      margin:
+        0 auto
+        15px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 38px;
 
-      border-radius: 10px;
-      padding: 10px;
-
-      color: #333;
-      background: #f1f1f1;
-    }
-
-    .success {
-      color: #075e19 !important;
-      background: #d9f7df !important;
-    }
-
-    .error {
-      color: #8b0000 !important;
-      background: #ffe0e0 !important;
-    }
-
-    .processing {
-      color: #714900 !important;
-      background: #fff1c7 !important;
-    }
-
-    /* Instruction */
-    .instruction {
-      margin-top: 13px;
-      color: #555;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    /* Device */
-    .device-info {
-      margin-top: 12px;
-      font-size: 10px;
-      color: #777;
-      word-break: break-all;
-    }
-
-    /* Footer */
-    .footer {
       color: white;
-      text-align: center;
-      margin-top: 18px;
+
+    }
+
+
+    .icon-checkin {
+
+      background:
+        #16a34a;
+
+    }
+
+
+    .icon-checkout {
+
+      background:
+        #2563eb;
+
+    }
+
+
+    .icon-completed {
+
+      background:
+        #64748b;
+
+    }
+
+
+    .icon-error {
+
+      background:
+        #dc2626;
+
+    }
+
+
+    /* ==========================================
+       RESULT TITLE
+    ========================================== */
+
+    #resultTitle {
+
+      font-size: 23px;
+
+      font-weight: 800;
+
+      color: #172b4d;
+
+      margin-bottom: 8px;
+
+    }
+
+
+    #resultMessage {
+
+      font-size: 14px;
+
+      color: #64748b;
+
+      margin-bottom: 22px;
+
+    }
+
+
+    /* ==========================================
+       STAFF AVATAR
+    ========================================== */
+
+    .staff-avatar {
+
+      width: 82px;
+
+      height: 82px;
+
+      border-radius: 50%;
+
+      margin:
+        0 auto
+        12px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e2e8f0,
+          #cbd5e1
+        );
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 40px;
+
+      border:
+        4px solid
+        #f1f5f9;
+
+    }
+
+
+    #staffName {
+
+      font-size: 21px;
+
+      font-weight: 800;
+
+      color: #172b4d;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    #staffId {
+
+      display: inline-block;
+
+      background:
+        #f1f5f9;
+
+      color:
+        #475569;
+
+      padding:
+        5px 12px;
+
+      border-radius: 15px;
 
       font-size: 12px;
 
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      margin-bottom: 18px;
+
     }
 
-    /* Mobile / Tablet */
-    @media (max-width: 600px) {
 
-      .main-container {
-        padding: 12px;
+    /* ==========================================
+       INFORMATION BOX
+    ========================================== */
+
+    .info-box {
+
+      text-align: left;
+
+      background:
+        #f8fafc;
+
+      border:
+        1px solid
+        #e2e8f0;
+
+      border-radius: 16px;
+
+      padding: 14px;
+
+      margin-bottom: 18px;
+
+    }
+
+
+    .info-row {
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      gap: 10px;
+
+      padding:
+        9px 0;
+
+      border-bottom:
+        1px solid
+        #e2e8f0;
+
+      font-size: 13px;
+
+    }
+
+
+    .info-row:last-child {
+
+      border-bottom: none;
+
+    }
+
+
+    .info-label {
+
+      color:
+        #64748b;
+
+    }
+
+
+    .info-value {
+
+      font-weight: bold;
+
+      color:
+        #172b4d;
+
+      text-align: right;
+
+    }
+
+
+    /* ==========================================
+       SCAN NEXT BUTTON
+    ========================================== */
+
+    .scan-next {
+
+      width: 100%;
+
+      border: none;
+
+      border-radius: 14px;
+
+      padding: 15px;
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      color: white;
+
+      background:
+        #0f4c75;
+
+      transition:
+        0.2s;
+
+    }
+
+
+    .scan-next:active {
+
+      transform:
+        scale(0.98);
+
+    }
+
+
+    /* ==========================================
+       STATUS
+    ========================================== */
+
+    #scannerStatus {
+
+      margin-top: 14px;
+
+      min-height: 42px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 10px;
+
+      border-radius: 12px;
+
+      background:
+        #f1f5f9;
+
+      color:
+        #475569;
+
+      font-size: 13px;
+
+      font-weight: 600;
+
+    }
+
+
+    .processing {
+
+      background:
+        #fef3c7 !important;
+
+      color:
+        #92400e !important;
+
+    }
+
+
+    .error {
+
+      background:
+        #fee2e2 !important;
+
+      color:
+        #991b1b !important;
+
+    }
+
+
+    /* ==========================================
+       FOOTER
+    ========================================== */
+
+    .footer {
+
+      color: white;
+
+      margin-top: 18px;
+
+      font-size: 11px;
+
+      opacity: 0.8;
+
+    }
+
+
+    /* ==========================================
+       MOBILE
+    ========================================== */
+
+    @media
+    (max-width: 500px) {
+
+      body {
+
+        padding:
+          12px;
+
       }
+
 
       .hospital-name {
-        font-size: 27px;
+
+        font-size:
+          26px;
+
       }
 
-      .system-name {
-        font-size: 16px;
+
+      #resultCard {
+
+        padding:
+          22px 15px;
+
       }
 
-      .scanner-card {
-        padding: 14px;
-      }
-
-      .scanner-title {
-        font-size: 19px;
-      }
     }
 
   </style>
+
 </head>
+
 
 <body>
 
+
   <div class="main-container">
 
-    <!-- HEADER -->
+
+    <!-- ======================================
+         HEADER
+    ======================================= -->
+
     <div class="header">
 
-      <div class="hospital-name">
-        IBADAT HOSPITAL
+
+      <div class="hospital-logo">
+        🏥
       </div>
+
+
+      <div class="hospital-name">
+
+        IBADAT HOSPITAL
+
+      </div>
+
 
       <div class="system-name">
+
         STAFF ATTENDANCE SYSTEM
+
       </div>
 
-      <div class="subtitle">
-        Scan your Staff ID QR Code
+
+      <div class="live-info">
+
+        <div
+          class="info-pill"
+          id="liveDate"
+        >
+          Loading Date...
+        </div>
+
+
+        <div
+          class="info-pill"
+          id="liveTime"
+        >
+          Loading Time...
+        </div>
+
       </div>
+
 
     </div>
 
 
-    <!-- SCANNER -->
-    <div class="scanner-card">
+    <!-- ======================================
+         SCANNER CARD
+    ======================================= -->
+
+    <div
+      class="scanner-card"
+      id="scannerCard"
+    >
+
 
       <div class="scanner-title">
-        📷 Scan Staff QR Code
+
+        📷 SCAN STAFF QR CODE
+
       </div>
+
 
       <div id="reader"></div>
 
-      <div id="status">
-        Please scan your QR Code
+
+      <div
+        id="scannerStatus"
+      >
+
+        📷 Ready — Scan your Staff QR Code
+
       </div>
 
-      <div class="instruction">
-        Place the QR code inside the scanner area.
-        <br>
-        Your attendance will be recorded automatically.
-      </div>
-
-      <div class="device-info" id="deviceInfo"></div>
 
     </div>
 
 
-    <!-- FOOTER -->
+    <!-- ======================================
+         RESULT CARD
+    ======================================= -->
+
+    <div
+      id="resultCard"
+    >
+
+
+      <!-- RESULT ICON -->
+
+      <div
+        id="resultIcon"
+        class="
+          result-icon
+          icon-checkin
+        "
+      >
+
+        ✓
+
+      </div>
+
+
+      <!-- TITLE -->
+
+      <div
+        id="resultTitle"
+      >
+
+        CHECK-IN SUCCESSFUL
+
+      </div>
+
+
+      <!-- MESSAGE -->
+
+      <div
+        id="resultMessage"
+      >
+
+        Your attendance has been recorded.
+
+      </div>
+
+
+      <!-- STAFF AVATAR -->
+
+      <div
+        class="staff-avatar"
+      >
+
+        👤
+
+      </div>
+
+
+      <!-- STAFF NAME -->
+
+      <div
+        id="staffName"
+      >
+
+        Staff Name
+
+      </div>
+
+
+      <!-- STAFF ID -->
+
+      <div
+        id="staffId"
+      >
+
+        STAFF ID
+
+      </div>
+
+
+      <!-- STAFF INFORMATION -->
+
+      <div
+        class="info-box"
+      >
+
+
+        <div class="info-row">
+
+          <div class="info-label">
+
+            🏢 Department
+
+          </div>
+
+
+          <div
+            class="info-value"
+            id="staffDepartment"
+          >
+            -
+
+          </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <div class="info-label">
+
+            💼 Position
+
+          </div>
+
+
+          <div
+            class="info-value"
+            id="staffPosition"
+          >
+            -
+
+          </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <div class="info-label">
+
+            📅 Date
+
+          </div>
+
+
+          <div
+            class="info-value"
+            id="attendanceDate"
+          >
+            -
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="info-row"
+          id="checkInRow"
+        >
+
+          <div class="info-label">
+
+            🟢 Check-In
+
+          </div>
+
+
+          <div
+            class="info-value"
+            id="checkInTime"
+          >
+            -
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="info-row"
+          id="checkOutRow"
+        >
+
+          <div class="info-label">
+
+            🔵 Check-Out
+
+          </div>
+
+
+          <div
+            class="info-value"
+            id="checkOutTime"
+          >
+            -
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="info-row"
+          id="workingHoursRow"
+        >
+
+          <div class="info-label">
+
+            ⏱️ Working Hours
+
+          </div>
+
+
+          <div
+            class="info-value"
+            id="workingHours"
+          >
+            -
+
+          </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <div class="info-label">
+
+            📊 Status
+
+          </div>
+
+
+          <div
+            class="info-value"
+            id="attendanceStatus"
+          >
+            -
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- SCAN NEXT -->
+
+      <button
+        class="scan-next"
+        onclick="scanNext()"
+      >
+
+        📷 SCAN NEXT
+
+      </button>
+
+
+    </div>
+
+
+    <!-- ======================================
+         FOOTER
+    ======================================= -->
+
     <div class="footer">
-      Authorized Staff Attendance
+
+      <div>
+        🟢 SYSTEM ONLINE
+      </div>
+
+      <div
+        id="deviceInfo"
+      >
+      </div>
+
       <br>
-      © IBADAT HOSPITAL
+
+      © 2026 IBADAT HOSPITAL
+
     </div>
+
 
   </div>
 
 
+
 <script>
 
-  /* =====================================================
-     GOOGLE APPS SCRIPT URL
-     ===================================================== */
 
-  const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbymIUtdsG9jhl3RjcL3sxIFL5_AbYELjFK0Vnv0soE4pKsesEU9AQ2iDPf6VExpjzvt0w/exec";
+/* =====================================================
+   GOOGLE APPS SCRIPT URL
+===================================================== */
 
-
-  /* =====================================================
-     REGISTERED TABLET DEVICE ID
-     ===================================================== */
-
-  const DEVICE_ID =
-    "DEVICE-1788521073961-83gldrc7";
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbymIUtdsG9jhl3RjcL3sxIFL5_AbYELjFK0Vnv0soE4pKsesEU9AQ2iDPf6VExpjzvt0w/exec";
 
 
-  /* =====================================================
-     VARIABLES
-     ===================================================== */
+/* =====================================================
+   DEVICE ID
+===================================================== */
 
-  let scanner = null;
-  let isProcessing = false;
-
-
-  /* =====================================================
-     SHOW DEVICE
-     ===================================================== */
-
-  document.getElementById("deviceInfo").innerHTML =
-    "Device: " + DEVICE_ID;
+const DEVICE_ID =
+"DEVICE-1788521073961-83gldrc7";
 
 
-  /* =====================================================
-     STATUS FUNCTION
-     ===================================================== */
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-  function showStatus(message, type = "") {
+let scanner = null;
 
-    const status =
-      document.getElementById("status");
+let isProcessing = false;
 
-    status.innerHTML = message;
+let scannerStarted = false;
 
-    status.className = "";
 
-    if (type) {
-      status.classList.add(type);
-    }
+/* =====================================================
+   DEVICE INFO
+===================================================== */
+
+document
+  .getElementById(
+    "deviceInfo"
+  )
+  .innerHTML =
+"Device: " +
+DEVICE_ID;
+
+
+/* =====================================================
+   LIVE DATE & TIME
+===================================================== */
+
+function updateLiveClock() {
+
+  const now =
+    new Date();
+
+
+  document
+    .getElementById(
+      "liveDate"
+    )
+    .innerHTML =
+    now.toLocaleDateString();
+
+
+  document
+    .getElementById(
+      "liveTime"
+    )
+    .innerHTML =
+    now.toLocaleTimeString();
+
+}
+
+
+updateLiveClock();
+
+
+setInterval(
+  updateLiveClock,
+  1000
+);
+
+
+/* =====================================================
+   SCANNER STATUS
+===================================================== */
+
+function showScannerStatus(
+  message,
+  type = ""
+) {
+
+  const status =
+    document.getElementById(
+      "scannerStatus"
+    );
+
+
+  status.innerHTML =
+    message;
+
+
+  status.className =
+    type;
+
+}
+
+
+/* =====================================================
+   EXTRACT STAFF ID
+===================================================== */
+
+function extractStaffId(
+  text
+) {
+
+  text =
+    String(
+      text || ""
+    ).trim();
+
+
+  if (!text) {
+
+    return "";
+
   }
 
 
-  /* =====================================================
-     EXTRACT STAFF ID FROM QR
-     ===================================================== */
+  try {
 
-  function extractStaffId(text) {
+    if (
+      text.includes(
+        "id="
+      )
+    ) {
 
-    text = String(text || "").trim();
+      const url =
+        new URL(
+          text
+        );
 
-    if (!text) {
-      return "";
+
+      const id =
+        url.searchParams.get(
+          "id"
+        );
+
+
+      if (id) {
+
+        return id.trim();
+
+      }
+
     }
+
+  }
+
+  catch (error) {
+
+  }
+
+
+  return text;
+
+}
+
+
+/* =====================================================
+   SEND ATTENDANCE
+===================================================== */
+
+function sendAttendance(
+  staffId
+) {
+
+  if (
+    isProcessing
+  ) {
+
+    return;
+
+  }
+
+
+  isProcessing =
+    true;
+
+
+  showScannerStatus(
+
+    "⏳ Recording attendance...",
+
+    "processing"
+
+  );
+
+
+  const callbackName =
+
+    "attendanceCallback_" +
+
+    Date.now();
+
+
+  window[
+    callbackName
+  ] =
+
+  function(
+    response
+  ) {
 
     try {
 
-      /*
-       * If QR contains:
-       * https://example.com/?id=STAFF001
-       */
 
-      if (text.includes("id=")) {
+      console.log(
+        "Attendance Response:",
+        response
+      );
 
-        const url = new URL(text);
 
-        const id =
-          url.searchParams.get("id");
+      showAttendanceResult(
+        response
+      );
 
-        if (id) {
-          return id.trim();
-        }
-      }
 
-    } catch (error) {
-      // QR may simply contain Staff ID
     }
 
+    catch (
+      error
+    ) {
 
-    /*
-     * If QR directly contains:
-     * STAFF001
-     */
-
-    return text;
-  }
+      console.error(
+        error
+      );
 
 
-  /* =====================================================
-     SEND ATTENDANCE
-     ===================================================== */
+      showScannerStatus(
 
-  function sendAttendance(staffId) {
+        "❌ Attendance processing error",
 
-    if (isProcessing) {
-      return;
+        "error"
+
+      );
+
+
+      isProcessing =
+        false;
+
     }
 
-    isProcessing = true;
-
-    showStatus(
-      "⏳ Recording attendance...",
-      "processing"
-    );
-
-
-    /*
-     * JSONP callback
-     */
-
-    const callbackName =
-      "attendanceCallback_" +
-      Date.now();
-
-
-    window[callbackName] =
-      function(response) {
-
-        try {
-
-          console.log(
-            "Attendance Response:",
-            response
-          );
-
-
-          let message =
-            response;
-
-
-          /*
-           * If Apps Script returns an object
-           */
-
-          if (
-            typeof response === "object" &&
-            response !== null
-          ) {
-
-            if (response.message) {
-              message = response.message;
-            }
-
-            else if (response.status) {
-              message = response.status;
-            }
-
-            else {
-              message =
-                JSON.stringify(response);
-            }
-
-          }
-
-
-          /*
-           * SUCCESS
-           */
-
-          if (
-            String(message)
-              .toLowerCase()
-              .includes("❌")
-          ) {
-
-            showStatus(
-              message,
-              "error"
-            );
-
-          } else {
-
-            showStatus(
-              "✅ " + message,
-              "success"
-            );
-          }
-
-
-          /*
-           * Wait before next scan
-           */
-
-          setTimeout(
-            function() {
-
-              isProcessing = false;
-
-              showStatus(
-                "Please scan the next Staff QR Code"
-              );
-
-            },
-            4000
-          );
-
-
-        } catch (error) {
-
-          console.error(error);
-
-          showStatus(
-            "❌ Attendance processing error",
-            "error"
-          );
-
-          setTimeout(
-            function() {
-              isProcessing = false;
-            },
-            3000
-          );
-        }
-
-
-        /*
-         * Remove JSONP script
-         */
-
-        const script =
-          document.getElementById(
-            callbackName
-          );
-
-        if (script) {
-          script.remove();
-        }
-
-        delete window[callbackName];
-      };
-
-
-    /*
-     * Build Apps Script URL
-     */
-
-    const url =
-      GOOGLE_SCRIPT_URL +
-      "?mode=attendance" +
-      "&staffId=" +
-      encodeURIComponent(staffId) +
-      "&deviceId=" +
-      encodeURIComponent(DEVICE_ID) +
-      "&callback=" +
-      encodeURIComponent(callbackName);
-
-
-    console.log(
-      "Sending attendance:",
-      url
-    );
-
-
-    /*
-     * JSONP script
-     */
 
     const script =
-      document.createElement("script");
 
-    script.id = callbackName;
-
-    script.src = url;
-
-    script.onerror =
-      function() {
-
-        showStatus(
-          "❌ Connection Error. Please check Internet.",
-          "error"
-        );
-
-        isProcessing = false;
-
-        if (script) {
-          script.remove();
-        }
-
-        delete window[callbackName];
-      };
+      document.getElementById(
+        callbackName
+      );
 
 
-    document.body.appendChild(script);
+    if (
+      script
+    ) {
+
+      script.remove();
+
+    }
+
+
+    delete window[
+      callbackName
+    ];
+
+  };
+
+
+  const url =
+
+    GOOGLE_SCRIPT_URL +
+
+    "?mode=attendance" +
+
+    "&staffId=" +
+
+    encodeURIComponent(
+      staffId
+    ) +
+
+    "&deviceId=" +
+
+    encodeURIComponent(
+      DEVICE_ID
+    ) +
+
+    "&callback=" +
+
+    encodeURIComponent(
+      callbackName
+    );
+
+
+  const script =
+
+    document.createElement(
+      "script"
+    );
+
+
+  script.id =
+    callbackName;
+
+
+  script.src =
+    url;
+
+
+  script.onerror =
+
+  function() {
+
+
+    showScannerStatus(
+
+      "❌ Connection Error. Please check Internet.",
+
+      "error"
+
+    );
+
+
+    isProcessing =
+      false;
+
+
+    script.remove();
+
+
+    delete window[
+      callbackName
+    ];
+
+  };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   SHOW RESULT CARD
+===================================================== */
+
+function showAttendanceResult(
+  data
+) {
+
+
+  /*
+     Hide Scanner
+  */
+
+  document
+    .getElementById(
+      "scannerCard"
+    )
+    .style.display =
+    "none";
+
+
+  /*
+     Show Result
+  */
+
+  document
+    .getElementById(
+      "resultCard"
+    )
+    .style.display =
+    "block";
+
+
+  /*
+     RESULT ELEMENTS
+  */
+
+  const icon =
+
+    document.getElementById(
+      "resultIcon"
+    );
+
+
+  const title =
+
+    document.getElementById(
+      "resultTitle"
+    );
+
+
+  const message =
+
+    document.getElementById(
+      "resultMessage"
+    );
+
+
+  /*
+     STAFF INFORMATION
+  */
+
+  document
+    .getElementById(
+      "staffName"
+    )
+    .innerHTML =
+    data.name ||
+    "Unknown Staff";
+
+
+  document
+    .getElementById(
+      "staffId"
+    )
+    .innerHTML =
+    data.staffId ||
+    "-";
+
+
+  document
+    .getElementById(
+      "staffDepartment"
+    )
+    .innerHTML =
+    data.department ||
+    "-";
+
+
+  document
+    .getElementById(
+      "staffPosition"
+    )
+    .innerHTML =
+    data.position ||
+    "-";
+
+
+  document
+    .getElementById(
+      "attendanceDate"
+    )
+    .innerHTML =
+    data.date ||
+    "-";
+
+
+  document
+    .getElementById(
+      "checkInTime"
+    )
+    .innerHTML =
+    data.checkIn ||
+    "-";
+
+
+  document
+    .getElementById(
+      "checkOutTime"
+    )
+    .innerHTML =
+    data.checkOut ||
+    "-";
+
+
+  document
+    .getElementById(
+      "workingHours"
+    )
+    .innerHTML =
+    data.workingHours ||
+    "-";
+
+
+  document
+    .getElementById(
+      "attendanceStatus"
+    )
+    .innerHTML =
+    data.status ||
+    "-";
+
+
+  /*
+     DEFAULT MESSAGE
+  */
+
+  message.innerHTML =
+
+    data.message ||
+
+    "Attendance processed.";
+
+
+  /*
+     RESET ICON CLASS
+  */
+
+  icon.className =
+    "result-icon";
+
+
+  /*
+     CHECK-IN
+  */
+
+  if (
+    data.action ===
+    "CHECK_IN"
+  ) {
+
+
+    icon.innerHTML =
+      "✓";
+
+
+    icon.classList.add(
+      "icon-checkin"
+    );
+
+
+    title.innerHTML =
+
+      "CHECK-IN SUCCESSFUL";
+
+
+    document
+      .getElementById(
+        "checkOutRow"
+      )
+      .style.display =
+      "none";
+
+
+    document
+      .getElementById(
+        "workingHoursRow"
+      )
+      .style.display =
+      "none";
 
   }
 
 
-  /* =====================================================
-     QR SCANNED
-     ===================================================== */
+  /*
+     CHECK-OUT
+  */
 
-  function onScanSuccess(decodedText) {
+  else if (
+    data.action ===
+    "CHECK_OUT"
+  ) {
 
-    if (isProcessing) {
-      return;
-    }
+
+    icon.innerHTML =
+      "✓";
 
 
-    console.log(
-      "QR Scanned:",
+    icon.classList.add(
+      "icon-checkout"
+    );
+
+
+    title.innerHTML =
+
+      "CHECK-OUT SUCCESSFUL";
+
+
+    document
+      .getElementById(
+        "checkOutRow"
+      )
+      .style.display =
+      "flex";
+
+
+    document
+      .getElementById(
+        "workingHoursRow"
+      )
+      .style.display =
+      "flex";
+
+  }
+
+
+  /*
+     COMPLETED
+  */
+
+  else if (
+    data.action ===
+    "COMPLETED"
+  ) {
+
+
+    icon.innerHTML =
+      "🔒";
+
+
+    icon.classList.add(
+      "icon-completed"
+    );
+
+
+    title.innerHTML =
+
+      "ATTENDANCE COMPLETED";
+
+
+    document
+      .getElementById(
+        "checkOutRow"
+      )
+      .style.display =
+      "flex";
+
+
+    document
+      .getElementById(
+        "workingHoursRow"
+      )
+      .style.display =
+      "none";
+
+  }
+
+
+  /*
+     ERROR / OTHER
+  */
+
+  else {
+
+
+    icon.innerHTML =
+      "⚠";
+
+
+    icon.classList.add(
+      "icon-error"
+    );
+
+
+    title.innerHTML =
+
+      data.action
+        ?
+        data.action
+          .replace(
+            /_/g,
+            " "
+          )
+        :
+        "ATTENDANCE ERROR";
+
+
+    document
+      .getElementById(
+        "checkOutRow"
+      )
+      .style.display =
+      "none";
+
+
+    document
+      .getElementById(
+        "workingHoursRow"
+      )
+      .style.display =
+      "none";
+
+  }
+
+}
+
+
+/* =====================================================
+   SCAN NEXT
+===================================================== */
+
+function scanNext() {
+
+
+  /*
+     Hide Result
+  */
+
+  document
+    .getElementById(
+      "resultCard"
+    )
+    .style.display =
+    "none";
+
+
+  /*
+     Show Scanner
+  */
+
+  document
+    .getElementById(
+      "scannerCard"
+    )
+    .style.display =
+    "block";
+
+
+  /*
+     RESET PROCESSING
+  */
+
+  isProcessing =
+    false;
+
+
+  /*
+     SHOW READY STATUS
+  */
+
+  showScannerStatus(
+
+    "📷 Ready — Scan the next Staff QR Code"
+
+  );
+
+}
+
+
+/* =====================================================
+   QR SCAN SUCCESS
+===================================================== */
+
+function onScanSuccess(
+  decodedText
+) {
+
+  if (
+    isProcessing
+  ) {
+
+    return;
+
+  }
+
+
+  const staffId =
+
+    extractStaffId(
       decodedText
     );
 
 
-    const staffId =
-      extractStaffId(decodedText);
+  if (
+    !staffId
+  ) {
 
+    showScannerStatus(
 
-    if (!staffId) {
+      "❌ Staff ID not found",
 
-      showStatus(
-        "❌ Staff ID not found",
-        "error"
-      );
+      "error"
 
-      return;
-    }
-
-
-    console.log(
-      "Staff ID:",
-      staffId
     );
 
 
-    sendAttendance(staffId);
+    return;
 
   }
 
 
-  /* =====================================================
-     QR ERROR
-     ===================================================== */
+  sendAttendance(
+    staffId
+  );
 
-  function onScanFailure(error) {
+}
 
-    /*
-     * Normal scanning errors are ignored.
-     * Do not show them to staff.
-     */
+
+/* =====================================================
+   START SCANNER
+===================================================== */
+
+function startScanner() {
+
+
+  if (
+    scannerStarted
+  ) {
+
+    return;
 
   }
 
 
-  /* =====================================================
-     START SCANNER
-     ===================================================== */
-
-  function startScanner() {
-
-    scanner =
-      new Html5Qrcode("reader");
+  scannerStarted =
+    true;
 
 
-    const config = {
+  scanner =
+    new Html5Qrcode(
+      "reader"
+    );
 
-      fps: 10,
 
-      qrbox: function(
-        viewfinderWidth,
-        viewfinderHeight
-      ) {
+  const config = {
 
-        const size =
-          Math.min(
-            viewfinderWidth * 0.75,
-            viewfinderHeight * 0.75
-          );
+    fps: 10,
 
-        return {
-          width: size,
-          height: size
-        };
+
+    qrbox:
+    function(
+
+      viewfinderWidth,
+
+      viewfinderHeight
+
+    ) {
+
+
+      const size =
+
+        Math.min(
+
+          viewfinderWidth * 0.72,
+
+          viewfinderHeight * 0.72
+
+        );
+
+
+      return {
+
+        width:
+          size,
+
+        height:
+          size
+
+      };
+
+    },
+
+
+    aspectRatio:
+      1.0,
+
+
+    rememberLastUsedCamera:
+      true
+
+  };
+
+
+  scanner
+
+    .start(
+
+      {
+
+        facingMode:
+          "environment"
 
       },
 
-      aspectRatio: 1.0,
 
-      rememberLastUsedCamera: true
-
-    };
+      config,
 
 
-    scanner
-      .start(
-        {
-          facingMode: "environment"
-        },
+      onScanSuccess,
 
-        config,
 
-        onScanSuccess,
+      function() {}
 
-        onScanFailure
+    )
 
+    .then(
+
+      function() {
+
+
+        showScannerStatus(
+
+          "📷 Ready — Scan Staff QR Code"
+
+        );
+
+      }
+
+    )
+
+    .catch(
+
+      function(
+        error
+      ) {
+
+
+        console.error(
+          error
+        );
+
+
+        showScannerStatus(
+
+          "❌ Camera permission required.",
+
+          "error"
+
+        );
+
+      }
+
+    );
+
+}
+
+
+/* =====================================================
+   START PAGE
+===================================================== */
+
+window.addEventListener(
+
+  "load",
+
+  function() {
+
+
+    document
+      .getElementById(
+        "scannerCard"
       )
-
-      .then(
-        function() {
-
-          showStatus(
-            "📷 Ready — Scan Staff QR Code"
-          );
-
-        }
-      )
-
-      .catch(
-        function(error) {
-
-          console.error(
-            "Camera Error:",
-            error
-          );
+      .style.display =
+      "block";
 
 
-          showStatus(
-            "❌ Camera permission required. Please allow camera access.",
-            "error"
-          );
+    setTimeout(
 
-        }
-      );
+      startScanner,
+
+      500
+
+    );
 
   }
 
+);
 
-  /* =====================================================
-     START WHEN PAGE LOADS
-     ===================================================== */
-
-  window.addEventListener(
-    "load",
-    function() {
-
-      setTimeout(
-        startScanner,
-        500
-      );
-
-    }
-  );
 
 </script>
+
 
 </body>
 </html>
