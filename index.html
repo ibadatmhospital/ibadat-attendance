@@ -1379,339 +1379,113 @@ function sendAttendance(
    SHOW RESULT CARD
 ===================================================== */
 
-function showAttendanceResult(
-  data
-) {
+function showAttendanceResult(response) {
 
+  let message = String(response || "");
 
-  /*
-     Hide Scanner
-  */
+  console.log("Attendance Response:", message);
 
-  document
-    .getElementById(
-      "scannerCard"
-    )
-    .style.display =
-    "none";
-
-
-  /*
-     Show Result
-  */
-
-  document
-    .getElementById(
-      "resultCard"
-    )
-    .style.display =
-    "block";
-
-
-  /*
-     RESULT ELEMENTS
-  */
-
-  const icon =
-
-    document.getElementById(
-      "resultIcon"
-    );
-
-
-  const title =
-
-    document.getElementById(
-      "resultTitle"
-    );
-
-
-  const message =
-
-    document.getElementById(
-      "resultMessage"
-    );
-
-
-  /*
-     STAFF INFORMATION
-  */
-
-  document
-    .getElementById(
-      "staffName"
-    )
-    .innerHTML =
-    data.name ||
-    "Unknown Staff";
-
-
-  document
-    .getElementById(
-      "staffId"
-    )
-    .innerHTML =
-    data.staffId ||
-    "-";
-
-
-  document
-    .getElementById(
-      "staffDepartment"
-    )
-    .innerHTML =
-    data.department ||
-    "-";
-
-
-  document
-    .getElementById(
-      "staffPosition"
-    )
-    .innerHTML =
-    data.position ||
-    "-";
-
-
-  document
-    .getElementById(
-      "attendanceDate"
-    )
-    .innerHTML =
-    data.date ||
-    "-";
-
-
-  document
-    .getElementById(
-      "checkInTime"
-    )
-    .innerHTML =
-    data.checkIn ||
-    "-";
-
-
-  document
-    .getElementById(
-      "checkOutTime"
-    )
-    .innerHTML =
-    data.checkOut ||
-    "-";
-
-
-  document
-    .getElementById(
-      "workingHours"
-    )
-    .innerHTML =
-    data.workingHours ||
-    "-";
-
-
-  document
-    .getElementById(
-      "attendanceStatus"
-    )
-    .innerHTML =
-    data.status ||
-    "-";
-
-
-  /*
-     DEFAULT MESSAGE
-  */
-
-  message.innerHTML =
-
-    data.message ||
-
-    "Attendance processed.";
-
-
-  /*
-     RESET ICON CLASS
-  */
-
-  icon.className =
-    "result-icon";
-
-
-  /*
-     CHECK-IN
-  */
+  // ==============================
+  // CHECK-IN
+  // ==============================
 
   if (
-    data.action ===
-    "CHECK_IN"
+    message.includes("CHECK-IN SUCCESSFUL")
   ) {
 
+    document.getElementById("scannerCard").style.display = "none";
+    document.getElementById("resultCard").style.display = "block";
 
-    icon.innerHTML =
-      "✓";
+    document.getElementById("resultIcon").className =
+      "result-icon icon-checkin";
 
+    document.getElementById("resultIcon").innerHTML = "✓";
 
-    icon.classList.add(
-      "icon-checkin"
-    );
-
-
-    title.innerHTML =
-
+    document.getElementById("resultTitle").innerHTML =
       "CHECK-IN SUCCESSFUL";
 
+    document.getElementById("resultMessage").innerHTML =
+      "Your attendance has been recorded successfully.";
 
-    document
-      .getElementById(
-        "checkOutRow"
-      )
-      .style.display =
-      "none";
+    fillResultData(message);
 
-
-    document
-      .getElementById(
-        "workingHoursRow"
-      )
-      .style.display =
-      "none";
-
+    return;
   }
 
 
-  /*
-     CHECK-OUT
-  */
+  // ==============================
+  // CHECK-OUT
+  // ==============================
 
-  else if (
-    data.action ===
-    "CHECK_OUT"
+  if (
+    message.includes("CHECK-OUT SUCCESSFUL")
   ) {
 
+    document.getElementById("scannerCard").style.display = "none";
+    document.getElementById("resultCard").style.display = "block";
 
-    icon.innerHTML =
-      "✓";
+    document.getElementById("resultIcon").className =
+      "result-icon icon-checkout";
 
+    document.getElementById("resultIcon").innerHTML = "✓";
 
-    icon.classList.add(
-      "icon-checkout"
-    );
-
-
-    title.innerHTML =
-
+    document.getElementById("resultTitle").innerHTML =
       "CHECK-OUT SUCCESSFUL";
 
+    document.getElementById("resultMessage").innerHTML =
+      "Your check-out has been recorded successfully.";
 
-    document
-      .getElementById(
-        "checkOutRow"
-      )
-      .style.display =
-      "flex";
+    fillResultData(message);
 
-
-    document
-      .getElementById(
-        "workingHoursRow"
-      )
-      .style.display =
-      "flex";
-
+    return;
   }
 
 
-  /*
-     COMPLETED
-  */
+  // ==============================
+  // ALREADY COMPLETED
+  // ==============================
 
-  else if (
-    data.action ===
-    "COMPLETED"
+  if (
+    message.includes("ATTENDANCE ALREADY COMPLETED")
   ) {
 
+    document.getElementById("scannerCard").style.display = "none";
+    document.getElementById("resultCard").style.display = "block";
 
-    icon.innerHTML =
-      "🔒";
+    document.getElementById("resultIcon").className =
+      "result-icon icon-completed";
 
+    document.getElementById("resultIcon").innerHTML = "🔒";
 
-    icon.classList.add(
-      "icon-completed"
-    );
-
-
-    title.innerHTML =
-
+    document.getElementById("resultTitle").innerHTML =
       "ATTENDANCE COMPLETED";
 
+    document.getElementById("resultMessage").innerHTML =
+      "Today's attendance is already completed.";
 
-    document
-      .getElementById(
-        "checkOutRow"
-      )
-      .style.display =
-      "flex";
-
-
-    document
-      .getElementById(
-        "workingHoursRow"
-      )
-      .style.display =
-      "none";
-
+    return;
   }
 
 
-  /*
-     ERROR / OTHER
-  */
+  // ==============================
+  // ERROR
+  // ==============================
 
-  else {
+  document.getElementById("scannerCard").style.display = "none";
+  document.getElementById("resultCard").style.display = "block";
 
+  document.getElementById("resultIcon").className =
+    "result-icon icon-error";
 
-    icon.innerHTML =
-      "⚠";
+  document.getElementById("resultIcon").innerHTML = "⚠";
 
+  document.getElementById("resultTitle").innerHTML =
+    "ATTENDANCE NOTICE";
 
-    icon.classList.add(
-      "icon-error"
-    );
-
-
-    title.innerHTML =
-
-      data.action
-        ?
-        data.action
-          .replace(
-            /_/g,
-            " "
-          )
-        :
-        "ATTENDANCE ERROR";
-
-
-    document
-      .getElementById(
-        "checkOutRow"
-      )
-      .style.display =
-      "none";
-
-
-    document
-      .getElementById(
-        "workingHoursRow"
-      )
-      .style.display =
-      "none";
-
-  }
+  document.getElementById("resultMessage").innerHTML =
+    message;
 
 }
-
-
 /* =====================================================
    SCAN NEXT
 ===================================================== */
