@@ -1,974 +1,650 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
-
-<title>
-IBADAT Hospital - Staff Attendance
-</title>
+<title>IBADAT HOSPITAL - Staff Attendance</title>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 
-
 <style>
 
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-
-body {
-
-  min-height: 100vh;
-
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
   background:
-    linear-gradient(
-      rgba(5,25,45,.88),
-      rgba(10,45,75,.90)
-    ),
-    url("hospital.jpeg");
-
-  background-size: cover;
-
-  background-position: center;
-
-  background-attachment: fixed;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  padding: 15px;
+    linear-gradient(rgba(4,18,38,.88),rgba(4,18,38,.94)),
+    url("hospital.jpeg") center/cover fixed;
+  color:white;
+  min-height:100vh;
 }
 
-
-.main-container {
-
-  width: 100%;
-
-  max-width: 500px;
-
-  text-align: center;
-
+.container{
+  width:100%;
+  max-width:1050px;
+  margin:auto;
+  padding:20px;
 }
 
+/* HEADER */
 
-/* =========================
-HEADER
-========================= */
-
-.header {
-
-  color: white;
-
-  margin-bottom: 18px;
-
+.header{
+  text-align:center;
+  padding:15px 10px 25px;
 }
 
-
-.hospital-logo {
-
-  width: 65px;
-
-  height: 65px;
-
-  margin: auto;
-
-  border-radius: 50%;
-
-  background:
-    rgba(255,255,255,.15);
-
-  border:
-    2px solid
-    rgba(255,255,255,.5);
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  overflow: hidden;
-
+.logo{
+  font-size:42px;
 }
 
-
-.hospital-logo img {
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: contain;
-
+.header h1{
+  margin:8px 0 3px;
+  font-size:28px;
+  letter-spacing:1px;
 }
 
-
-.hospital-name {
-
-  margin-top: 10px;
-
-  font-size: 30px;
-
-  font-weight: 800;
-
-  letter-spacing: 1px;
-
+.header p{
+  margin:5px 0;
+  opacity:.8;
 }
 
-
-.system-name {
-
-  margin-top: 5px;
-
-  font-size: 14px;
-
-  letter-spacing: 2px;
-
+.live{
+  margin-top:10px;
+  font-size:14px;
+  opacity:.9;
 }
 
+/* SUMMARY */
 
-.live-info {
-
-  margin-top: 14px;
-
-  display: flex;
-
-  justify-content: center;
-
-  gap: 10px;
-
+.summary-title{
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+  margin:5px 0 12px;
 }
 
-
-.info-pill {
-
-  background:
-    rgba(255,255,255,.13);
-
-  border:
-    1px solid
-    rgba(255,255,255,.18);
-
-  padding: 7px 12px;
-
-  border-radius: 20px;
-
-  font-size: 12px;
-
+.summary{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:10px;
+  margin-bottom:20px;
 }
 
-
-/* =========================
-SCANNER
-========================= */
-
-.scanner-card {
-
-  background: white;
-
-  border-radius: 25px;
-
-  padding: 18px;
-
-  box-shadow:
-    0 20px 50px
-    rgba(0,0,0,.35);
-
+.summary-box{
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:14px;
+  padding:14px 5px;
+  text-align:center;
+  backdrop-filter:blur(8px);
 }
 
-
-.scanner-title {
-
-  font-size: 19px;
-
-  font-weight: bold;
-
-  color: #172b4d;
-
-  margin-bottom: 14px;
-
+.summary-number{
+  font-size:25px;
+  font-weight:bold;
 }
 
-
-.scanner-help {
-
-  font-size: 12px;
-
-  color: #64748b;
-
-  margin-bottom: 12px;
-
+.summary-label{
+  font-size:11px;
+  margin-top:5px;
+  opacity:.85;
 }
 
-
-#reader {
-
-  width: 100%;
-
-  overflow: hidden;
-
-  border-radius: 18px;
-
-  background: #111;
-
+.summary-date{
+  text-align:center;
+  font-size:13px;
+  opacity:.75;
+  margin-bottom:15px;
 }
 
+/* SCANNER */
 
-#scannerStatus {
-
-  margin-top: 14px;
-
-  min-height: 42px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding: 10px;
-
-  border-radius: 12px;
-
-  background: #f1f5f9;
-
-  color: #475569;
-
-  font-size: 13px;
-
-  font-weight: 600;
-
+.card{
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:20px;
+  padding:20px;
+  backdrop-filter:blur(12px);
+  box-shadow:0 10px 40px rgba(0,0,0,.3);
 }
 
-
-.processing {
-
-  background: #fef3c7 !important;
-
-  color: #92400e !important;
-
+.scanner-title{
+  text-align:center;
+  font-size:21px;
+  font-weight:bold;
+  margin-bottom:15px;
 }
 
-
-.error {
-
-  background: #fee2e2 !important;
-
-  color: #991b1b !important;
-
+#reader{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  border-radius:15px;
+  overflow:hidden;
 }
 
-
-.success-status {
-
-  background: #dcfce7 !important;
-
-  color: #166534 !important;
-
+#scannerStatus{
+  text-align:center;
+  margin-top:15px;
+  padding:12px;
+  border-radius:10px;
+  background:rgba(255,255,255,.08);
+  font-size:14px;
 }
 
-
-/* =========================
-RESULT
-========================= */
-
-#resultCard {
-
-  display: none;
-
-  background: white;
-
-  border-radius: 25px;
-
-  padding: 28px 20px;
-
-  box-shadow:
-    0 20px 50px
-    rgba(0,0,0,.35);
-
+.processing{
+  background:rgba(255,180,0,.15)!important;
 }
 
-
-.result-icon {
-
-  width: 75px;
-
-  height: 75px;
-
-  border-radius: 50%;
-
-  margin: 0 auto 15px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 38px;
-
-  color: white;
-
+.error{
+  background:rgba(255,0,0,.15)!important;
 }
 
+/* RESULT */
 
-.icon-checkin {
-  background: #16a34a;
+#resultCard{
+  display:none;
+  margin-top:20px;
+  text-align:center;
 }
 
-
-.icon-checkout {
-  background: #2563eb;
+.result-icon{
+  width:75px;
+  height:75px;
+  border-radius:50%;
+  margin:0 auto 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+  font-weight:bold;
 }
 
-
-.icon-completed {
-  background: #dc2626;
+.icon-checkin{
+  background:#16a34a;
 }
 
-
-.icon-error {
-  background: #dc2626;
+.icon-checkout{
+  background:#2563eb;
 }
 
-
-#resultTitle {
-
-  font-size: 23px;
-
-  font-weight: 800;
-
-  color: #172b4d;
-
-  margin-bottom: 8px;
-
+.icon-completed{
+  background:#7c3aed;
 }
 
-
-#resultMessage {
-
-  font-size: 14px;
-
-  color: #64748b;
-
-  margin-bottom: 20px;
-
+.icon-error{
+  background:#dc2626;
 }
 
-
-/* =========================
-STAFF PHOTO
-========================= */
-
-.staff-photo {
-
-  width: 90px;
-
-  height: 90px;
-
-  border-radius: 50%;
-
-  object-fit: cover;
-
-  border: 4px solid #f1f5f9;
-
-  margin: 0 auto 12px;
-
-  display: block;
-
+#resultTitle{
+  font-size:26px;
+  font-weight:bold;
 }
 
-
-.staff-photo.hidden {
-
-  display: none;
-
+#resultMessage{
+  margin:8px 0 18px;
+  opacity:.8;
 }
 
+/* PHOTO */
 
-#staffName {
-
-  font-size: 21px;
-
-  font-weight: 800;
-
-  color: #172b4d;
-
-  margin-bottom: 5px;
-
+.staff-photo{
+  width:125px;
+  height:125px;
+  object-fit:cover;
+  border-radius:50%;
+  border:4px solid white;
+  margin:5px auto 12px;
+  display:block;
+  background:#ddd;
 }
 
-
-#staffId {
-
-  display: inline-block;
-
-  background: #f1f5f9;
-
-  color: #475569;
-
-  padding: 5px 12px;
-
-  border-radius: 15px;
-
-  font-size: 12px;
-
-  margin-bottom: 18px;
-
+.staff-photo.hidden{
+  display:none;
 }
 
-
-/* =========================
-INFO
-========================= */
-
-.info-box {
-
-  text-align: left;
-
-  background: #f8fafc;
-
-  border: 1px solid #e2e8f0;
-
-  border-radius: 16px;
-
-  padding: 14px;
-
-  margin-bottom: 18px;
-
+#staffName{
+  font-size:24px;
+  font-weight:bold;
 }
 
-
-.info-row {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  gap: 10px;
-
-  padding: 9px 0;
-
-  border-bottom:
-    1px solid #e2e8f0;
-
-  font-size: 13px;
-
+#staffId{
+  margin-top:4px;
+  opacity:.75;
+  font-size:14px;
 }
 
-
-.info-row:last-child {
-
-  border-bottom: none;
-
+.info-box{
+  max-width:600px;
+  margin:20px auto;
+  background:rgba(0,0,0,.20);
+  border-radius:15px;
+  overflow:hidden;
 }
 
-
-.info-label {
-
-  color: #64748b;
-
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:13px 16px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  text-align:left;
 }
 
-
-.info-value {
-
-  font-weight: bold;
-
-  color: #172b4d;
-
-  text-align: right;
-
+.info-row:last-child{
+  border-bottom:none;
 }
 
-
-/* =========================
-SCAN NEXT
-========================= */
-
-.scan-next {
-
-  width: 100%;
-
-  border: none;
-
-  border-radius: 14px;
-
-  padding: 15px;
-
-  font-size: 15px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-  color: white;
-
-  background: #0f4c75;
-
+.info-label{
+  opacity:.7;
 }
 
-
-.scan-next:active {
-
-  transform: scale(.98);
-
+.info-value{
+  font-weight:bold;
+  text-align:right;
 }
 
+/* BUTTON */
 
-/* =========================
-FOOTER
-========================= */
-
-.footer {
-
-  color: white;
-
-  margin-top: 18px;
-
-  font-size: 11px;
-
-  opacity: .85;
-
+.scan-next{
+  width:100%;
+  max-width:600px;
+  border:0;
+  border-radius:12px;
+  padding:15px;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  background:white;
+  color:#06203d;
 }
 
+.scan-next:hover{
+  opacity:.9;
+}
 
-@media(max-width:500px) {
+/* FOOTER */
 
-  body {
-    padding: 10px;
+.footer{
+  text-align:center;
+  margin-top:25px;
+  padding:20px;
+  font-size:12px;
+  opacity:.7;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+  .summary{
+    grid-template-columns:repeat(3,1fr);
   }
 
-  .hospital-name {
-    font-size: 26px;
+}
+
+@media(max-width:500px){
+
+  .container{
+    padding:10px;
   }
 
-  #resultCard {
-    padding: 22px 15px;
+  .header h1{
+    font-size:21px;
+  }
+
+  .summary{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .info-row{
+    flex-direction:column;
+    gap:5px;
+  }
+
+  .info-value{
+    text-align:left;
   }
 
 }
 
 </style>
-
 </head>
-
 
 <body>
 
+<div class="container">
 
-<div class="main-container">
+  <!-- HEADER -->
+
+  <div class="header">
+
+    <div class="logo">🏥</div>
+
+    <h1>IBADAT HOSPITAL</h1>
+
+    <p>STAFF ATTENDANCE SYSTEM</p>
+
+    <div class="live">
+      📅 <span id="liveDate">-</span>
+      &nbsp;&nbsp;
+      🕐 <span id="liveTime">-</span>
+    </div>
+
+  </div>
 
 
-<!-- HEADER -->
+  <!-- TODAY SUMMARY -->
 
-<div class="header">
+  <div class="summary-title">
+    📊 TODAY'S ATTENDANCE SUMMARY
+  </div>
 
-  <div class="hospital-logo">
+  <div class="summary-date">
+    Date: <span id="summaryDate">Loading...</span>
+  </div>
+
+  <div class="summary">
+
+    <div class="summary-box">
+      <div class="summary-number" id="summaryTotal">-</div>
+      <div class="summary-label">TOTAL STAFF</div>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-number" id="summaryIn">-</div>
+      <div class="summary-label">CHECKED IN</div>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-number" id="summaryOut">-</div>
+      <div class="summary-label">CHECKED OUT</div>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-number" id="summaryPending">-</div>
+      <div class="summary-label">PENDING</div>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-number" id="summaryLate">-</div>
+      <div class="summary-label">LATE</div>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-number" id="summaryAbsent">-</div>
+      <div class="summary-label">ABSENT</div>
+    </div>
+
+  </div>
+
+
+  <!-- SCANNER -->
+
+  <div class="card" id="scannerCard">
+
+    <div class="scanner-title">
+      📷 SCAN STAFF QR CODE
+    </div>
+
+    <div id="reader"></div>
+
+    <div id="scannerStatus">
+      📷 READY — SCAN STAFF QR CODE
+    </div>
+
+  </div>
+
+
+  <!-- RESULT -->
+
+  <div class="card" id="resultCard">
+
+    <div id="resultIcon"
+         class="result-icon icon-checkin">
+      ✓
+    </div>
+
+    <div id="resultTitle">
+      CHECK-IN SUCCESSFUL
+    </div>
+
+    <div id="resultMessage">
+      Attendance recorded successfully.
+    </div>
+
+
+    <!-- STAFF PHOTO -->
 
     <img
-      src="https://i.postimg.cc/FzBHcKJx/Whats-App-Image-2026-04-20-at-3-26-15-PM-(1).png"
+      id="staffPhoto"
+      class="staff-photo hidden"
+      alt="Staff Photo"
     >
 
-  </div>
 
+    <div id="staffName">
+      Staff Name
+    </div>
 
-  <div class="hospital-name">
-
-    IBADAT HOSPITAL
-
-  </div>
-
-
-  <div class="system-name">
-
-    STAFF ATTENDANCE SYSTEM
-
-  </div>
-
-
-  <div class="live-info">
-
-    <div class="info-pill"
-         id="liveDate">
-
-      Loading Date...
-
+    <div id="staffId">
+      STAFF ID
     </div>
 
 
-    <div class="info-pill"
-         id="liveTime">
+    <!-- STAFF INFORMATION -->
 
-      Loading Time...
+    <div class="info-box">
 
-    </div>
+      <div class="info-row">
 
-  </div>
+        <div class="info-label">
+          🏢 Department
+        </div>
 
-</div>
+        <div class="info-value"
+             id="staffDepartment">
+          -
+        </div>
 
-
-<!-- SCANNER -->
-
-<div
-  class="scanner-card"
-  id="scannerCard"
->
-
-  <div class="scanner-title">
-
-    📷 SCAN STAFF QR CODE
-
-  </div>
-
-
-  <div class="scanner-help">
-
-    Place the QR code inside the scanner frame
-
-  </div>
-
-
-  <div id="reader"></div>
-
-
-  <div
-    id="scannerStatus"
-  >
-
-    📷 Ready — Scan your Staff QR Code
-
-  </div>
-
-</div>
-
-
-<!-- RESULT -->
-
-<div
-  id="resultCard"
->
-
-
-  <div
-    id="resultIcon"
-    class="result-icon icon-checkin"
-  >
-    ✓
-  </div>
-
-
-  <div id="resultTitle">
-
-    CHECK-IN SUCCESSFUL
-
-  </div>
-
-
-  <div id="resultMessage">
-
-    Your attendance has been recorded.
-
-  </div>
-
-
-  <img
-    id="staffPhoto"
-    class="staff-photo"
-    alt="Staff Photo"
-  >
-
-
-  <div id="staffName">
-
-    Staff Name
-
-  </div>
-
-
-  <div id="staffId">
-
-    STAFF ID
-
-  </div>
-
-
-  <div class="info-box">
-
-
-    <div class="info-row">
-
-      <div class="info-label">
-        🏢 Department
       </div>
 
-      <div
-        class="info-value"
-        id="staffDepartment"
-      >
-        -
+
+      <div class="info-row">
+
+        <div class="info-label">
+          💼 Position
+        </div>
+
+        <div class="info-value"
+             id="staffPosition">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          📅 Date
+        </div>
+
+        <div class="info-value"
+             id="attendanceDate">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          🟢 Check-In
+        </div>
+
+        <div class="info-value"
+             id="checkInTime">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          🔵 Check-Out
+        </div>
+
+        <div class="info-value"
+             id="checkOutTime">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          ⏱️ Working Hours
+        </div>
+
+        <div class="info-value"
+             id="workingHours">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          📊 Status
+        </div>
+
+        <div class="info-value"
+             id="attendanceStatus">
+          -
+        </div>
+
       </div>
 
     </div>
 
 
-    <div class="info-row">
+    <button
+      class="scan-next"
+      onclick="scanNext()">
 
-      <div class="info-label">
-        💼 Position
-      </div>
+      📷 SCAN NEXT
 
-      <div
-        class="info-value"
-        id="staffPosition"
-      >
-        -
-      </div>
-
-    </div>
-
-
-    <div class="info-row">
-
-      <div class="info-label">
-        📅 Date
-      </div>
-
-      <div
-        class="info-value"
-        id="attendanceDate"
-      >
-        -
-      </div>
-
-    </div>
-
-
-    <div
-      class="info-row"
-      id="checkInRow"
-    >
-
-      <div class="info-label">
-        🟢 Check-In
-      </div>
-
-      <div
-        class="info-value"
-        id="checkInTime"
-      >
-        -
-      </div>
-
-    </div>
-
-
-    <div
-      class="info-row"
-      id="checkOutRow"
-    >
-
-      <div class="info-label">
-        🔵 Check-Out
-      </div>
-
-      <div
-        class="info-value"
-        id="checkOutTime"
-      >
-        -
-      </div>
-
-    </div>
-
-
-    <div
-      class="info-row"
-      id="workingHoursRow"
-    >
-
-      <div class="info-label">
-        ⏱️ Working Hours
-      </div>
-
-      <div
-        class="info-value"
-        id="workingHours"
-      >
-        -
-      </div>
-
-    </div>
-
-
-    <div class="info-row">
-
-      <div class="info-label">
-        📊 Status
-      </div>
-
-      <div
-        class="info-value"
-        id="attendanceStatus"
-      >
-        -
-      </div>
-
-    </div>
+    </button>
 
   </div>
 
 
-  <button
-    class="scan-next"
-    onclick="scanNext()"
-  >
+  <!-- FOOTER -->
 
-    📷 SCAN NEXT
+  <div class="footer">
 
-  </button>
+    🟢 SYSTEM ONLINE
 
-</div>
+    <br><br>
 
+    © 2026 IBADAT HOSPITAL
 
-<div class="footer">
-
-  🟢 SYSTEM ONLINE
-  <br><br>
-  © 2026 IBADAT HOSPITAL
-
-</div>
-
+  </div>
 
 </div>
 
 
 <script>
 
-
-// =====================================================
-// GOOGLE APPS SCRIPT
-// =====================================================
+/* =====================================================
+   GOOGLE APPS SCRIPT
+===================================================== */
 
 const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbymIUtdsG9jhl3RjcL3sxIFL5_AbYELjFK0Vnv0soE4pKsesEU9AQ2iDPf6VExpjzvt0w/exec";
 
 
-// =====================================================
-// REGISTERED TABLET
-// =====================================================
+/* =====================================================
+   DEVICE
+===================================================== */
 
 const DEVICE_ID =
 "DEVICE-1788521073961-83gldrc7";
 
 
+/* =====================================================
+   VARIABLES
+===================================================== */
+
 let scanner = null;
-
 let scannerStarted = false;
-
 let isProcessing = false;
 
 
-// =====================================================
-// CLOCK
-// =====================================================
+/* =====================================================
+   LIVE CLOCK
+===================================================== */
 
-function updateClock() {
+function updateClock(){
 
-  const now =
-    new Date();
+  const now = new Date();
 
-  document
-    .getElementById("liveDate")
-    .textContent =
-    now.toLocaleDateString(
-      "en-US",
-      {
-        weekday: "long",
-        year: "numeric",
-        month: "short",
-        day: "numeric"
-      }
-    );
+  document.getElementById("liveDate").innerText =
+    now.toLocaleDateString();
 
-
-  document
-    .getElementById("liveTime")
-    .textContent =
+  document.getElementById("liveTime").innerText =
     now.toLocaleTimeString();
 
 }
 
-
 updateClock();
 
-setInterval(
-  updateClock,
-  1000
-);
+setInterval(updateClock,1000);
 
 
-// =====================================================
-// STATUS
-// =====================================================
+/* =====================================================
+   SCANNER STATUS
+===================================================== */
 
-function showScannerStatus(
-  message,
-  type = ""
-) {
+function showScannerStatus(message,type=""){
 
-  const status =
-    document.getElementById(
-      "scannerStatus"
-    );
+  const el =
+    document.getElementById("scannerStatus");
 
-  status.textContent =
-    message;
+  el.innerHTML = message;
 
-  status.className =
-    type;
+  el.className = type;
+
 }
 
 
-// =====================================================
-// STAFF ID
-// =====================================================
+/* =====================================================
+   EXTRACT STAFF ID
+===================================================== */
 
-function extractStaffId(text) {
+function extractStaffId(text){
 
   text =
     String(text || "").trim();
 
-  if (!text) {
+  if(!text){
     return "";
   }
 
-
-  try {
+  try{
 
     const url =
       new URL(text);
@@ -976,63 +652,53 @@ function extractStaffId(text) {
     const id =
       url.searchParams.get("id");
 
-    if (id) {
+    if(id){
       return id.trim();
     }
 
-  } catch (error) {
-
-  }
-
+  }catch(e){}
 
   return text;
 
 }
 
 
-// =====================================================
-// START SCANNER
-// =====================================================
+/* =====================================================
+   START SCANNER
+===================================================== */
 
-function startScanner() {
+function startScanner(){
 
-  if (scannerStarted) {
+  if(scannerStarted){
     return;
   }
 
   scannerStarted = true;
 
-
   scanner =
-    new Html5Qrcode(
-      "reader"
-    );
+    new Html5Qrcode("reader");
 
 
   const config = {
 
-    fps: 10,
+    fps:10,
 
-    qrbox:
-      function(
-        viewfinderWidth,
-        viewfinderHeight
-      ) {
+    qrbox:function(width,height){
 
-        const size =
-          Math.min(
-            viewfinderWidth * .72,
-            viewfinderHeight * .72
-          );
+      const size =
+        Math.min(
+          width * 0.72,
+          height * 0.72
+        );
 
-        return {
-          width: size,
-          height: size
-        };
+      return {
+        width:size,
+        height:size
+      };
 
-      },
+    },
 
-    aspectRatio: 1.0
+    aspectRatio:1.0
 
   };
 
@@ -1040,32 +706,31 @@ function startScanner() {
   scanner.start(
 
     {
-      facingMode:
-        "environment"
+      facingMode:"environment"
     },
 
     config,
 
     onScanSuccess,
 
-    function(errorMessage) {
+    function(errorMessage){
 
-      // Ignore normal scan errors
+      // normal scan errors ignored
 
     }
 
-  ).then(function() {
+  ).then(function(){
 
     showScannerStatus(
       "📷 READY — SCAN STAFF QR CODE"
     );
 
-  }).catch(function(error) {
+  }).catch(function(error){
 
     console.error(error);
 
     showScannerStatus(
-      "❌ Camera permission required",
+      "❌ CAMERA PERMISSION REQUIRED",
       "error"
     );
 
@@ -1076,95 +741,90 @@ function startScanner() {
 }
 
 
-// =====================================================
-// QR SUCCESS
-// =====================================================
+/* =====================================================
+   QR SUCCESS
+===================================================== */
 
-function onScanSuccess(
-  decodedText
-) {
+function onScanSuccess(decodedText){
 
-  if (isProcessing) {
+  if(isProcessing){
     return;
   }
 
-
   const staffId =
-    extractStaffId(
-      decodedText
-    );
+    extractStaffId(decodedText);
 
-
-  if (!staffId) {
+  if(!staffId){
 
     showScannerStatus(
-      "❌ Invalid Staff QR Code",
+      "❌ INVALID STAFF QR CODE",
       "error"
     );
 
     return;
   }
 
-
   isProcessing = true;
-
 
   showScannerStatus(
     "⏳ VERIFYING STAFF...",
     "processing"
   );
 
-
-  sendAttendance(
-    staffId
-  );
+  sendAttendance(staffId);
 
 }
 
 
-// =====================================================
-// SEND ATTENDANCE
-// =====================================================
+/* =====================================================
+   SEND ATTENDANCE
+===================================================== */
 
-function sendAttendance(
-  staffId
-) {
+function sendAttendance(staffId){
 
   const callbackName =
     "attendanceCallback_" +
     Date.now();
 
 
-  window[
-    callbackName
-  ] = function(response) {
-
-    console.log(
-      "Attendance Response:",
-      response
-    );
+  let finished = false;
 
 
-    showAttendanceResult(
-      response
-    );
+  function finish(){
 
+    if(finished){
+      return;
+    }
+
+    finished = true;
 
     const script =
-      document.getElementById(
-        callbackName
-      );
+      document.getElementById(callbackName);
 
-    if (script) {
+    if(script){
       script.remove();
     }
 
+    try{
+      delete window[callbackName];
+    }catch(e){}
 
-    delete window[
-      callbackName
-    ];
+  }
 
-  };
+
+  window[callbackName] =
+    function(response){
+
+      console.log(
+        "Attendance Response:",
+        response
+      );
+
+      finish();
+
+      showAttendanceResult(response);
+
+    };
 
 
   const url =
@@ -1173,25 +833,473 @@ function sendAttendance(
     "?mode=attendance" +
 
     "&staffId=" +
-    encodeURIComponent(
-      staffId
-    ) +
+    encodeURIComponent(staffId) +
 
     "&deviceId=" +
-    encodeURIComponent(
-      DEVICE_ID
-    ) +
+    encodeURIComponent(DEVICE_ID) +
 
     "&callback=" +
-    encodeURIComponent(
-      callbackName
-    );
+    encodeURIComponent(callbackName);
 
 
   const script =
-    document.createElement(
-      "script"
+    document.createElement("script");
+
+  script.id =
+    callbackName;
+
+  script.src =
+    url;
+
+
+  script.onerror =
+    function(){
+
+      finish();
+
+      isProcessing = false;
+
+      showScannerStatus(
+        "❌ CONNECTION ERROR — CHECK INTERNET",
+        "error"
+      );
+
+    };
+
+
+  document.body.appendChild(script);
+
+
+  // Prevent endless VERIFYING
+  setTimeout(function(){
+
+    if(!finished){
+
+      finish();
+
+      isProcessing = false;
+
+      showScannerStatus(
+        "❌ SERVER TIMEOUT — PLEASE SCAN AGAIN",
+        "error"
+      );
+
+    }
+
+  },15000);
+
+}
+
+
+/* =====================================================
+   SHOW ATTENDANCE RESULT
+===================================================== */
+
+function showAttendanceResult(response){
+
+  console.log("RESULT:",response);
+
+
+  if(!response){
+
+    showError("No response from server.");
+    return;
+
+  }
+
+
+  if(response.success === true){
+
+    if(response.action === "CHECK_IN"){
+
+      showResult(
+        "✓",
+        "icon-checkin",
+        "CHECK-IN SUCCESSFUL",
+        "Your attendance has been recorded successfully.",
+        response
+      );
+
+      return;
+
+    }
+
+
+    if(response.action === "CHECK_OUT"){
+
+      showResult(
+        "✓",
+        "icon-checkout",
+        "CHECK-OUT SUCCESSFUL",
+        "Your check-out has been recorded successfully.",
+        response
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  if(response.action === "COMPLETED"){
+
+    showResult(
+      "🔒",
+      "icon-completed",
+      "ATTENDANCE COMPLETED",
+      "Today's attendance is already completed.",
+      response
     );
+
+    return;
+
+  }
+
+
+  showError(
+    response.message ||
+    "Attendance could not be processed."
+  );
+
+}
+
+
+/* =====================================================
+   SHOW RESULT
+===================================================== */
+
+function showResult(
+  icon,
+  iconClass,
+  title,
+  message,
+  data
+){
+
+  document.getElementById(
+    "scannerCard"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "resultCard"
+  ).style.display = "block";
+
+
+  const iconEl =
+    document.getElementById("resultIcon");
+
+  iconEl.className =
+    "result-icon " + iconClass;
+
+  iconEl.innerHTML =
+    icon;
+
+
+  document.getElementById(
+    "resultTitle"
+  ).innerText =
+    title;
+
+
+  document.getElementById(
+    "resultMessage"
+  ).innerText =
+    message;
+
+
+  fillResultData(data);
+
+  isProcessing = false;
+
+
+  // Update summary immediately
+  loadTodaySummary();
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+function showError(message){
+
+  document.getElementById(
+    "scannerCard"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "resultCard"
+  ).style.display = "block";
+
+
+  const iconEl =
+    document.getElementById("resultIcon");
+
+  iconEl.className =
+    "result-icon icon-error";
+
+  iconEl.innerHTML =
+    "⚠";
+
+
+  document.getElementById(
+    "resultTitle"
+  ).innerText =
+    "ATTENDANCE NOTICE";
+
+
+  document.getElementById(
+    "resultMessage"
+  ).innerText =
+    message;
+
+
+  isProcessing = false;
+
+}
+
+
+/* =====================================================
+   FILL STAFF DATA
+===================================================== */
+
+function fillResultData(data){
+
+  document.getElementById(
+    "staffName"
+  ).innerText =
+    data.name || "-";
+
+
+  document.getElementById(
+    "staffId"
+  ).innerText =
+    data.staffId || "-";
+
+
+  document.getElementById(
+    "staffDepartment"
+  ).innerText =
+    data.department || "-";
+
+
+  document.getElementById(
+    "staffPosition"
+  ).innerText =
+    data.position || "-";
+
+
+  document.getElementById(
+    "attendanceDate"
+  ).innerText =
+    data.date || "-";
+
+
+  document.getElementById(
+    "checkInTime"
+  ).innerText =
+    data.checkIn || "-";
+
+
+  document.getElementById(
+    "checkOutTime"
+  ).innerText =
+    data.checkOut || "-";
+
+
+  document.getElementById(
+    "workingHours"
+  ).innerText =
+    data.workingHours || "-";
+
+
+  document.getElementById(
+    "attendanceStatus"
+  ).innerText =
+    data.status || "-";
+
+
+  /* PHOTO */
+
+  const photo =
+    document.getElementById("staffPhoto");
+
+
+  photo.classList.add("hidden");
+
+
+  if(data.photo){
+
+    photo.src =
+      data.photo;
+
+    photo.onload =
+      function(){
+
+        photo.classList.remove("hidden");
+
+      };
+
+
+    photo.onerror =
+      function(){
+
+        console.log(
+          "Photo could not load:",
+          data.photo
+        );
+
+        photo.classList.add("hidden");
+
+      };
+
+  }
+
+}
+
+
+/* =====================================================
+   SCAN NEXT
+===================================================== */
+
+function scanNext(){
+
+  document.getElementById(
+    "resultCard"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "scannerCard"
+  ).style.display = "block";
+
+
+  isProcessing = false;
+
+
+  showScannerStatus(
+    "📷 READY — SCAN STAFF QR CODE"
+  );
+
+}
+
+
+/* =====================================================
+   TODAY SUMMARY
+===================================================== */
+
+function loadTodaySummary(){
+
+  const callbackName =
+    "summaryCallback_" +
+    Date.now();
+
+
+  let finished = false;
+
+
+  function finish(){
+
+    if(finished){
+      return;
+    }
+
+    finished = true;
+
+
+    const script =
+      document.getElementById(callbackName);
+
+    if(script){
+      script.remove();
+    }
+
+
+    try{
+      delete window[callbackName];
+    }catch(e){}
+
+  }
+
+
+  window[callbackName] =
+    function(response){
+
+      finish();
+
+      console.log(
+        "Summary:",
+        response
+      );
+
+
+      if(
+        !response ||
+        response.success !== true
+      ){
+        return;
+      }
+
+
+      document.getElementById(
+        "summaryDate"
+      ).innerText =
+        response.date || "-";
+
+
+      document.getElementById(
+        "summaryTotal"
+      ).innerText =
+        response.totalStaff || 0;
+
+
+      document.getElementById(
+        "summaryIn"
+      ).innerText =
+        response.checkedIn || 0;
+
+
+      document.getElementById(
+        "summaryOut"
+      ).innerText =
+        response.checkedOut || 0;
+
+
+      document.getElementById(
+        "summaryPending"
+      ).innerText =
+        response.pending || 0;
+
+
+      document.getElementById(
+        "summaryLate"
+      ).innerText =
+        response.late || 0;
+
+
+      document.getElementById(
+        "summaryAbsent"
+      ).innerText =
+        response.absent || 0;
+
+    };
+
+
+  const url =
+    GOOGLE_SCRIPT_URL +
+
+    "?mode=summary" +
+
+    "&callback=" +
+    encodeURIComponent(callbackName);
+
+
+  const script =
+    document.createElement("script");
 
 
   script.id =
@@ -1203,498 +1311,45 @@ function sendAttendance(
 
 
   script.onerror =
-    function() {
+    function(){
 
-      showScannerStatus(
-        "❌ CONNECTION ERROR — CHECK INTERNET",
-        "error"
+      finish();
+
+      console.log(
+        "Summary connection error"
       );
-
-      isProcessing = false;
-
-      script.remove();
-
-      delete window[
-        callbackName
-      ];
 
     };
 
 
-  document.body.appendChild(
-    script
-  );
+  document.body.appendChild(script);
+
+
+  setTimeout(function(){
+
+    finish();
+
+  },10000);
 
 }
 
 
-// =====================================================
-// SHOW ATTENDANCE RESULT
-// =====================================================
-
-function showAttendanceResult(
-  response
-) {
-
-
-  if (!response) {
-
-    showScannerStatus(
-      "❌ Empty server response",
-      "error"
-    );
-
-    isProcessing = false;
-
-    return;
-  }
-
-
-  // ===================================================
-  // CHECK-IN
-  // ===================================================
-
-  if (
-    response.success === true &&
-    response.action === "CHECK_IN"
-  ) {
-
-    openResultCard(
-      "checkin"
-    );
-
-
-    document
-      .getElementById(
-        "resultIcon"
-      )
-      .textContent = "✓";
-
-
-    document
-      .getElementById(
-        "resultTitle"
-      )
-      .textContent =
-      "CHECK-IN SUCCESSFUL";
-
-
-    document
-      .getElementById(
-        "resultMessage"
-      )
-      .textContent =
-      "Welcome to IBADAT Hospital";
-
-
-    fillResultData(
-      response
-    );
-
-
-    document
-      .getElementById(
-        "checkOutRow"
-      )
-      .style.display =
-      "none";
-
-
-    document
-      .getElementById(
-        "workingHoursRow"
-      )
-      .style.display =
-      "none";
-
-
-    return;
-  }
-
-
-  // ===================================================
-  // CHECK-OUT
-  // ===================================================
-
-  if (
-    response.success === true &&
-    response.action === "CHECK_OUT"
-  ) {
-
-    openResultCard(
-      "checkout"
-    );
-
-
-    document
-      .getElementById(
-        "resultIcon"
-      )
-      .textContent = "✓";
-
-
-    document
-      .getElementById(
-        "resultTitle"
-      )
-      .textContent =
-      "CHECK-OUT SUCCESSFUL";
-
-
-    document
-      .getElementById(
-        "resultMessage"
-      )
-      .textContent =
-      "You have been checked out";
-
-
-    fillResultData(
-      response
-    );
-
-
-    document
-      .getElementById(
-        "checkOutRow"
-      )
-      .style.display =
-      "flex";
-
-
-    document
-      .getElementById(
-        "workingHoursRow"
-      )
-      .style.display =
-      "flex";
-
-
-    return;
-  }
-
-
-  // ===================================================
-  // COMPLETED
-  // ===================================================
-
-  if (
-    response.action ===
-    "COMPLETED"
-  ) {
-
-    openResultCard(
-      "completed"
-    );
-
-
-    document
-      .getElementById(
-        "resultIcon"
-      )
-      .textContent =
-      "🔒";
-
-
-    document
-      .getElementById(
-        "resultTitle"
-      )
-      .textContent =
-      "ATTENDANCE COMPLETED";
-
-
-    document
-      .getElementById(
-        "resultMessage"
-      )
-      .textContent =
-      "Today's attendance has already been completed.";
-
-
-    fillResultData(
-      response
-    );
-
-
-    document
-      .getElementById(
-        "checkOutRow"
-      )
-      .style.display =
-      "flex";
-
-
-    document
-      .getElementById(
-        "workingHoursRow"
-      )
-      .style.display =
-      "flex";
-
-
-    return;
-  }
-
-
-  // ===================================================
-  // ERROR
-  // ===================================================
-
-  openResultCard(
-    "error"
-  );
-
-
-  document
-    .getElementById(
-      "resultIcon"
-    )
-    .textContent =
-    "!";
-
-
-  document
-    .getElementById(
-      "resultTitle"
-    )
-    .textContent =
-    "ATTENDANCE NOTICE";
-
-
-  document
-    .getElementById(
-      "resultMessage"
-    )
-    .textContent =
-    response.message ||
-    "Something went wrong.";
-
-
-  fillResultData(
-    response
-  );
-
-}
-
-
-// =====================================================
-// OPEN RESULT CARD
-// =====================================================
-
-function openResultCard(
-  type
-) {
-
-  document
-    .getElementById(
-      "scannerCard"
-    )
-    .style.display =
-    "none";
-
-
-  document
-    .getElementById(
-      "resultCard"
-    )
-    .style.display =
-    "block";
-
-
-  const icon =
-    document.getElementById(
-      "resultIcon"
-    );
-
-
-  icon.className =
-    "result-icon";
-
-
-  if (type === "checkin") {
-
-    icon.classList.add(
-      "icon-checkin"
-    );
-
-  } else if (
-    type === "checkout"
-  ) {
-
-    icon.classList.add(
-      "icon-checkout"
-    );
-
-  } else if (
-    type === "completed"
-  ) {
-
-    icon.classList.add(
-      "icon-completed"
-    );
-
-  } else {
-
-    icon.classList.add(
-      "icon-error"
-    );
-
-  }
-
-}
-
-
-// =====================================================
-// FILL STAFF DATA
-// =====================================================
-
-function fillResultData(
-  data
-) {
-
-  document
-    .getElementById(
-      "staffName"
-    )
-    .textContent =
-    data.name || "-";
-
-
-  document
-    .getElementById(
-      "staffId"
-    )
-    .textContent =
-    data.staffId || "-";
-
-
-  document
-    .getElementById(
-      "staffDepartment"
-    )
-    .textContent =
-    data.department || "-";
-
-
-  document
-    .getElementById(
-      "staffPosition"
-    )
-    .textContent =
-    data.position || "-";
-
-
-  document
-    .getElementById(
-      "attendanceDate"
-    )
-    .textContent =
-    data.date || "-";
-
-
-  document
-    .getElementById(
-      "checkInTime"
-    )
-    .textContent =
-    data.checkIn || "-";
-
-
-  document
-    .getElementById(
-      "checkOutTime"
-    )
-    .textContent =
-    data.checkOut || "-";
-
-
-  document
-    .getElementById(
-      "workingHours"
-    )
-    .textContent =
-    data.workingHours || "-";
-
-
-  document
-    .getElementById(
-      "attendanceStatus"
-    )
-    .textContent =
-    data.status || "-";
-
-
-  const photo =
-    document.getElementById(
-      "staffPhoto"
-    );
-
-
-  if (data.photo) {
-
-    photo.src =
-      data.photo;
-
-    photo.classList.remove(
-      "hidden"
-    );
-
-  } else {
-
-    photo.classList.add(
-      "hidden"
-    );
-
-  }
-
-}
-
-
-// =====================================================
-// SCAN NEXT
-// =====================================================
-
-function scanNext() {
-
-  document
-    .getElementById(
-      "resultCard"
-    )
-    .style.display =
-    "none";
-
-
-  document
-    .getElementById(
-      "scannerCard"
-    )
-    .style.display =
-    "block";
-
-
-  isProcessing =
-    false;
-
-
-  showScannerStatus(
-    "📷 READY — SCAN NEXT STAFF QR CODE"
-  );
-
-}
-
-
-// =====================================================
-// PAGE LOAD
-// =====================================================
+/* =====================================================
+   START
+===================================================== */
 
 window.addEventListener(
   "load",
-  function() {
+  function(){
 
-    setTimeout(
-      startScanner,
-      700
+    loadTodaySummary();
+
+    startScanner();
+
+    // Refresh summary every 30 seconds
+    setInterval(
+      loadTodaySummary,
+      30000
     );
 
   }
@@ -1703,5 +1358,4 @@ window.addEventListener(
 </script>
 
 </body>
-
 </html>
