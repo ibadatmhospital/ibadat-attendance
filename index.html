@@ -549,6 +549,10 @@ body{
 
     </button>
 
+    <div id="countdown"
+         style="margin-top:12px;font-size:15px;opacity:.8;">
+    </div>
+
   </div>
 
 
@@ -592,6 +596,7 @@ const DEVICE_ID =
 let scanner = null;
 let scannerStarted = false;
 let isProcessing = false;
+let autoNextTimer = null;
 
 
 /* =====================================================
@@ -755,6 +760,7 @@ function gregorianToSolar(gy, gm, gd){
 updateClock();
 
 setInterval(updateClock, 1000);
+
 
 /* =====================================================
    SCANNER STATUS
@@ -1092,38 +1098,7 @@ function showAttendanceResult(response){
       "Today's attendance is already completed.",
       response
     );
-function startNextScanCountdown() {
 
-  let seconds = 10;
-
-  const countdown =
-    document.getElementById("countdown");
-
-  if (countdown) {
-    countdown.innerText =
-      "Next scan in " + seconds + " seconds...";
-  }
-
-  const timer = setInterval(function() {
-
-    seconds--;
-
-    if (countdown) {
-      countdown.innerText =
-        "Next scan in " + seconds + " seconds...";
-    }
-
-    if (seconds <= 0) {
-
-      clearInterval(timer);
-
-      resetScannerForNextPerson();
-
-    }
-
-  }, 1000);
-
-}
     return;
 
   }
@@ -1188,6 +1163,9 @@ function showResult(
 
   // Update summary immediately
   loadTodaySummary();
+
+  // Automatically return to scanner after 10 seconds
+  startAutoNextScan();
 
 }
 
@@ -1338,25 +1316,91 @@ function fillResultData(data){
    SCAN NEXT
 ===================================================== */
 
-function scanNext(){
+async function stopScanner(){
 
-  document.getElementById(
-    "resultCard"
-  ).style.display = "none";
+  if(scanner && scannerStarted){
+
+    try{
+      await scanner.stop();
+    }catch(e){
+      console.log("Scanner stop:", e);
+    }
+
+  }
+
+  scannerStarted = false;
+  scanner = null;
+}
 
 
-  document.getElementById(
-    "scannerCard"
-  ).style.display = "block";
+async function scanNext(){
 
+  if(autoNextTimer){
+    clearInterval(autoNextTimer);
+    autoNextTimer = null;
+  }
+
+  document.getElementById("resultCard").style.display = "none";
+  document.getElementById("scannerCard").style.display = "block";
+
+  const countdown =
+    document.getElementById("countdown");
+
+  if(countdown){
+    countdown.innerText = "";
+  }
 
   isProcessing = false;
 
-
   showScannerStatus(
-    "📷 READY — SCAN STAFF QR CODE"
+    "⏳ STARTING CAMERA...",
+    "processing"
   );
 
+  await startScanner();
+}
+
+
+/* =====================================================
+   AUTO NEXT SCAN
+===================================================== */
+
+function startAutoNextScan(){
+
+  if(autoNextTimer){
+    clearInterval(autoNextTimer);
+    autoNextTimer = null;
+  }
+
+  let seconds = 10;
+
+  const countdown =
+    document.getElementById("countdown");
+
+  if(countdown){
+    countdown.innerText =
+      "📷 Next scan in " + seconds + " seconds...";
+  }
+
+  autoNextTimer = setInterval(async function(){
+
+    seconds--;
+
+    if(countdown){
+      countdown.innerText =
+        "📷 Next scan in " + seconds + " seconds...";
+    }
+
+    if(seconds <= 0){
+
+      clearInterval(autoNextTimer);
+      autoNextTimer = null;
+
+      await stopScanner();
+      await scanNext();
+    }
+
+  }, 1000);
 }
 
 
