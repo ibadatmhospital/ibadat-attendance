@@ -1486,6 +1486,74 @@ function showAttendanceResult(response) {
     message;
 
 }
+  function fillResultData(message) {
+
+  function getValue(label) {
+
+    const regex =
+      new RegExp(
+        label + "\\s*:\\s*([^<\\n]+)",
+        "i"
+      );
+
+    const match =
+      message.match(regex);
+
+    return match
+      ? match[1].trim()
+      : "-";
+  }
+
+
+  document.getElementById("staffName").innerHTML =
+    getValue("Name");
+
+  document.getElementById("staffId").innerHTML =
+    getValue("Staff ID");
+
+  document.getElementById("attendanceDate").innerHTML =
+    getValue("Date");
+
+  document.getElementById("checkInTime").innerHTML =
+    getValue("Check-In");
+
+  document.getElementById("checkOutTime").innerHTML =
+    getValue("Check-Out");
+
+  document.getElementById("workingHours").innerHTML =
+    getValue("Working Time");
+
+  document.getElementById("attendanceStatus").innerHTML =
+    getValue("Status");
+
+
+  document.getElementById("staffDepartment").innerHTML =
+    "-";
+
+  document.getElementById("staffPosition").innerHTML =
+    "-";
+
+
+  if (
+    message.includes("CHECK-IN SUCCESSFUL")
+  ) {
+
+    document.getElementById("checkOutRow").style.display =
+      "none";
+
+    document.getElementById("workingHoursRow").style.display =
+      "none";
+
+  } else {
+
+    document.getElementById("checkOutRow").style.display =
+      "flex";
+
+    document.getElementById("workingHoursRow").style.display =
+      "flex";
+
+  }
+}
 /* =====================================================
    SCAN NEXT
 ===================================================== */
