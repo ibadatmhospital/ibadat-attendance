@@ -1412,14 +1412,23 @@ function startScanner(){
 
   const config = {
 
-    fps:10,
+    /* ================================================
+       FAST QR DETECTION
+    ================================================ */
+
+    fps:20,
+
+
+    /* ================================================
+       LARGER QR DETECTION AREA
+    ================================================ */
 
     qrbox:function(width,height){
 
       const size =
         Math.min(
-          width * 0.72,
-          height * 0.72
+          width * 0.82,
+          height * 0.82
         );
 
       return {
@@ -1428,6 +1437,11 @@ function startScanner(){
       };
 
     },
+
+
+    /* ================================================
+       CAMERA ASPECT RATIO
+    ================================================ */
 
     aspectRatio:1.0
 
@@ -1444,7 +1458,11 @@ function startScanner(){
 
     onScanSuccess,
 
-    function(errorMessage){}
+    function(errorMessage){
+
+      /* QR searching errors are ignored */
+
+    }
 
   ).then(function(){
 
@@ -1466,8 +1484,6 @@ function startScanner(){
   });
 
 }
-
-
 /* =====================================================
    QR SUCCESS
 ===================================================== */
