@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0">
 
 <title>IBADAT HOSPITAL - Staff Attendance</title>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 
 <style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
 
 *{
   box-sizing:border-box;
@@ -24,11 +33,15 @@ body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
   background:
-    linear-gradient(rgba(4,18,38,.88),rgba(4,18,38,.94)),
+    linear-gradient(
+      rgba(4,18,38,.88),
+      rgba(4,18,38,.94)
+    ),
     url("hospital.jpeg") center/cover fixed;
   color:white;
   min-height:100vh;
 }
+
 
 /* =====================================================
    MAIN CONTAINER
@@ -40,6 +53,7 @@ body{
   margin:auto;
   padding:20px;
 }
+
 
 /* =====================================================
    HEADER
@@ -71,6 +85,7 @@ body{
   opacity:.9;
 }
 
+
 /* =====================================================
    SUMMARY TITLE
 ===================================================== */
@@ -89,8 +104,9 @@ body{
   margin-bottom:15px;
 }
 
+
 /* =====================================================
-   SUMMARY - DESKTOP
+   SUMMARY
 ===================================================== */
 
 .summary{
@@ -148,6 +164,7 @@ body{
   white-space:nowrap;
 }
 
+
 /* =====================================================
    SUMMARY STATUS ACCENTS
 ===================================================== */
@@ -176,6 +193,7 @@ body{
   background:#ef4444;
 }
 
+
 /* =====================================================
    GENERAL CARD
 ===================================================== */
@@ -188,6 +206,7 @@ body{
   backdrop-filter:blur(12px);
   box-shadow:0 10px 40px rgba(0,0,0,.3);
 }
+
 
 /* =====================================================
    SCANNER
@@ -208,6 +227,45 @@ body{
   overflow:hidden;
 }
 
+#reader video{
+  width:100%!important;
+  object-fit:cover;
+}
+
+
+/* =====================================================
+   CAMERA SWITCH BUTTON
+===================================================== */
+
+.camera-switch{
+  display:block;
+  width:100%;
+  max-width:360px;
+  margin:8px auto 0;
+  padding:8px 12px;
+  border:0;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:bold;
+  cursor:pointer;
+  background:white;
+  color:#06203d;
+}
+
+.camera-switch:hover{
+  opacity:.9;
+}
+
+.camera-switch:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+
+/* =====================================================
+   SCANNER STATUS
+===================================================== */
+
 #scannerStatus{
   text-align:center;
   margin-top:15px;
@@ -224,6 +282,7 @@ body{
 .error{
   background:rgba(255,0,0,.15)!important;
 }
+
 
 /* =====================================================
    RESULT
@@ -273,6 +332,7 @@ body{
   opacity:.8;
 }
 
+
 /* =====================================================
    PHOTO
 ===================================================== */
@@ -302,6 +362,7 @@ body{
   opacity:.75;
   font-size:14px;
 }
+
 
 /* =====================================================
    STAFF INFORMATION
@@ -337,6 +398,7 @@ body{
   text-align:right;
 }
 
+
 /* =====================================================
    BUTTON
 ===================================================== */
@@ -358,6 +420,7 @@ body{
   opacity:.9;
 }
 
+
 /* =====================================================
    FOOTER
 ===================================================== */
@@ -370,6 +433,7 @@ body{
   opacity:.7;
 }
 
+
 /* =====================================================
    MOBILE
 ===================================================== */
@@ -381,6 +445,7 @@ body{
   }
 
 }
+
 
 @media(max-width:500px){
 
@@ -406,6 +471,7 @@ body{
   }
 
 }
+
 
 /* =====================================================
    PORTRAIT TABLET
@@ -433,6 +499,7 @@ body{
     flex-direction:column;
     overflow:hidden;
   }
+
 
   /* HEADER */
 
@@ -464,6 +531,7 @@ body{
     font-size:9px;
     line-height:11px;
   }
+
 
   /* SUMMARY */
 
@@ -535,6 +603,7 @@ body{
     white-space:nowrap;
   }
 
+
   /* SCANNER CARD */
 
   #scannerCard{
@@ -550,6 +619,7 @@ body{
     margin-bottom:2px;
     letter-spacing:.2px;
   }
+
 
   /* LARGE TABLET SCANNER */
 
@@ -569,6 +639,7 @@ body{
     object-fit:cover;
   }
 
+
   #reader__dashboard{
     padding:0!important;
     margin:0!important;
@@ -584,6 +655,21 @@ body{
     padding:0!important;
   }
 
+
+  /* CAMERA BUTTON */
+
+  .camera-switch{
+    max-width:360px;
+    margin-top:3px;
+    padding:5px 8px;
+    font-size:9px;
+    line-height:11px;
+    border-radius:6px;
+  }
+
+
+  /* STATUS */
+
   #scannerStatus{
     margin-top:2px;
     padding:3px;
@@ -591,6 +677,7 @@ body{
     line-height:10px;
     border-radius:5px;
   }
+
 
   /* RESULT CARD */
 
@@ -704,6 +791,7 @@ body{
 
 }
 
+
 /* =====================================================
    RESULT PAGE - HIDE FOOTER
 ===================================================== */
@@ -717,11 +805,14 @@ body{
 }
 
 </style>
+
 </head>
+
 
 <body>
 
 <div class="container">
+
 
   <!-- HEADER -->
 
@@ -734,9 +825,13 @@ body{
     <p>STAFF ATTENDANCE SYSTEM</p>
 
     <div class="live">
+
       📅 <span id="liveDate">-</span>
+
       &nbsp;&nbsp;
+
       🕐 <span id="liveTime">-</span>
+
     </div>
 
   </div>
@@ -749,39 +844,105 @@ body{
   </div>
 
   <div class="summary-date">
-    Date: <span id="summaryDate">Loading...</span>
+
+    Date:
+    <span id="summaryDate">
+      Loading...
+    </span>
+
   </div>
+
 
   <div class="summary">
 
-    <div class="summary-box">
-      <div class="summary-number" id="summaryTotal">-</div>
-      <div class="summary-label">TOTAL STAFF</div>
-    </div>
 
     <div class="summary-box">
-      <div class="summary-number" id="summaryIn">-</div>
-      <div class="summary-label">CHECKED IN</div>
+
+      <div
+        class="summary-number"
+        id="summaryTotal">
+        -
+      </div>
+
+      <div class="summary-label">
+        TOTAL STAFF
+      </div>
+
     </div>
 
-    <div class="summary-box">
-      <div class="summary-number" id="summaryOut">-</div>
-      <div class="summary-label">CHECKED OUT</div>
-    </div>
 
     <div class="summary-box">
-      <div class="summary-number" id="summaryPending">-</div>
-      <div class="summary-label">PENDING</div>
+
+      <div
+        class="summary-number"
+        id="summaryIn">
+        -
+      </div>
+
+      <div class="summary-label">
+        CHECKED IN
+      </div>
+
     </div>
 
-    <div class="summary-box">
-      <div class="summary-number" id="summaryLate">-</div>
-      <div class="summary-label">LATE</div>
-    </div>
 
     <div class="summary-box">
-      <div class="summary-number" id="summaryAbsent">-</div>
-      <div class="summary-label">STAFF ABSENT</div>
+
+      <div
+        class="summary-number"
+        id="summaryOut">
+        -
+      </div>
+
+      <div class="summary-label">
+        CHECKED OUT
+      </div>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <div
+        class="summary-number"
+        id="summaryPending">
+        -
+      </div>
+
+      <div class="summary-label">
+        PENDING
+      </div>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <div
+        class="summary-number"
+        id="summaryLate">
+        -
+      </div>
+
+      <div class="summary-label">
+        LATE
+      </div>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <div
+        class="summary-number"
+        id="summaryAbsent">
+        -
+      </div>
+
+      <div class="summary-label">
+        STAFF ABSENT
+      </div>
+
     </div>
 
   </div>
@@ -795,10 +956,27 @@ body{
       📷 SCAN STAFF QR CODE
     </div>
 
+
     <div id="reader"></div>
 
+
+    <!-- CAMERA SWITCH -->
+
+    <button
+      type="button"
+      id="cameraSwitchButton"
+      class="camera-switch"
+      onclick="switchCamera()">
+
+      🔄 SWITCH TO FRONT CAMERA
+
+    </button>
+
+
     <div id="scannerStatus">
+
       📷 READY — SHOW QR CARD TO CAMERA
+
     </div>
 
   </div>
@@ -808,35 +986,52 @@ body{
 
   <div class="card" id="resultCard">
 
-    <div id="resultIcon"
-         class="result-icon icon-checkin">
+
+    <div
+      id="resultIcon"
+      class="result-icon icon-checkin">
+
       ✓
+
     </div>
+
 
     <div id="resultTitle">
+
       CHECK-IN SUCCESSFUL
+
     </div>
 
+
     <div id="resultMessage">
+
       Attendance recorded successfully.
+
     </div>
+
 
     <img
       id="staffPhoto"
       class="staff-photo hidden"
-      alt="Staff Photo"
-    >
+      alt="Staff Photo">
+
 
     <div id="staffName">
+
       Staff Name
+
     </div>
 
+
     <div id="staffId">
+
       STAFF ID
+
     </div>
 
 
     <div class="info-box">
+
 
       <div class="info-row">
 
@@ -844,9 +1039,12 @@ body{
           🏢 Department
         </div>
 
-        <div class="info-value"
-             id="staffDepartment">
+        <div
+          class="info-value"
+          id="staffDepartment">
+
           -
+
         </div>
 
       </div>
@@ -858,9 +1056,12 @@ body{
           💼 Position
         </div>
 
-        <div class="info-value"
-             id="staffPosition">
+        <div
+          class="info-value"
+          id="staffPosition">
+
           -
+
         </div>
 
       </div>
@@ -872,9 +1073,12 @@ body{
           📅 Date
         </div>
 
-        <div class="info-value"
-             id="attendanceDate">
+        <div
+          class="info-value"
+          id="attendanceDate">
+
           -
+
         </div>
 
       </div>
@@ -886,9 +1090,12 @@ body{
           🟢 Check-In
         </div>
 
-        <div class="info-value"
-             id="checkInTime">
+        <div
+          class="info-value"
+          id="checkInTime">
+
           -
+
         </div>
 
       </div>
@@ -900,9 +1107,12 @@ body{
           🔵 Check-Out
         </div>
 
-        <div class="info-value"
-             id="checkOutTime">
+        <div
+          class="info-value"
+          id="checkOutTime">
+
           -
+
         </div>
 
       </div>
@@ -914,9 +1124,12 @@ body{
           ⏱️ Working Hours
         </div>
 
-        <div class="info-value"
-             id="workingHours">
+        <div
+          class="info-value"
+          id="workingHours">
+
           -
+
         </div>
 
       </div>
@@ -928,12 +1141,16 @@ body{
           📊 Status
         </div>
 
-        <div class="info-value"
-             id="attendanceStatus">
+        <div
+          class="info-value"
+          id="attendanceStatus">
+
           -
+
         </div>
 
       </div>
+
 
     </div>
 
@@ -946,8 +1163,15 @@ body{
 
     </button>
 
-    <div id="countdown"
-         style="margin-top:12px;font-size:15px;opacity:.8;">
+
+    <div
+      id="countdown"
+      style="
+        margin-top:12px;
+        font-size:15px;
+        opacity:.8;
+      ">
+
     </div>
 
   </div>
@@ -965,10 +1189,12 @@ body{
 
   </div>
 
+
 </div>
 
 
 <script>
+
 
 /* =====================================================
    GOOGLE APPS SCRIPT
@@ -991,9 +1217,27 @@ const DEVICE_ID =
 ===================================================== */
 
 let scanner = null;
+
 let scannerStarted = false;
+
 let isProcessing = false;
+
 let autoNextTimer = null;
+
+
+/* =====================================================
+   CAMERA SELECTION
+===================================================== */
+
+/*
+   environment = REAR CAMERA
+   user        = FRONT / SELFIE CAMERA
+
+   Rear camera is the default.
+*/
+
+let currentFacingMode =
+  "environment";
 
 
 /* =====================================================
@@ -1002,51 +1246,74 @@ let autoNextTimer = null;
 
 function updateClock(){
 
-  const now = new Date();
+  const now =
+    new Date();
+
 
   const afghanistanDate =
     new Intl.DateTimeFormat(
       "en-US",
       {
-        timeZone: "Asia/Kabul",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric"
+        timeZone:"Asia/Kabul",
+        year:"numeric",
+        month:"numeric",
+        day:"numeric"
       }
     ).formatToParts(now);
 
+
   let year = 0;
+
   let month = 0;
+
   let day = 0;
 
-  afghanistanDate.forEach(function(part){
 
-    if(part.type === "year"){
-      year = Number(part.value);
+  afghanistanDate.forEach(
+    function(part){
+
+      if(part.type === "year"){
+        year =
+          Number(part.value);
+      }
+
+      if(part.type === "month"){
+        month =
+          Number(part.value);
+      }
+
+      if(part.type === "day"){
+        day =
+          Number(part.value);
+      }
+
     }
-
-    if(part.type === "month"){
-      month = Number(part.value);
-    }
-
-    if(part.type === "day"){
-      day = Number(part.value);
-    }
-
-  });
+  );
 
 
   const solar =
-    gregorianToSolar(year, month, day);
+    gregorianToSolar(
+      year,
+      month,
+      day
+    );
 
 
-  document.getElementById("liveDate").innerText =
-    solar.year + "/" +
-    solar.month + "/" +
+  document.getElementById(
+    "liveDate"
+  ).innerText =
+
+    solar.year +
+    "/" +
+    solar.month +
+    "/" +
     solar.day;
 
 
-  document.getElementById("liveTime").innerText =
+  document.getElementById(
+    "liveTime"
+  ).innerText =
+
     new Intl.DateTimeFormat(
       "en-US",
       {
@@ -1061,54 +1328,99 @@ function updateClock(){
 }
 
 
-function gregorianToSolar(gy,gm,gd){
+function gregorianToSolar(
+  gy,
+  gm,
+  gd
+){
 
   let g_d_m = [
-    0,31,59,90,120,151,
-    181,212,243,273,304,334
+    0,
+    31,
+    59,
+    90,
+    120,
+    151,
+    181,
+    212,
+    243,
+    273,
+    304,
+    334
   ];
 
+
   let gy2 =
-    (gm > 2) ? (gy + 1) : gy;
+    (gm > 2)
+      ? (gy + 1)
+      : gy;
+
 
   let days =
+
     355666 +
     (365 * gy) +
-    Math.floor((gy2 + 3) / 4) -
-    Math.floor((gy2 + 99) / 100) +
-    Math.floor((gy2 + 399) / 400) +
+    Math.floor(
+      (gy2 + 3) / 4
+    ) -
+    Math.floor(
+      (gy2 + 99) / 100
+    ) +
+    Math.floor(
+      (gy2 + 399) / 400
+    ) +
     gd +
     g_d_m[gm - 1];
 
+
   let jy =
     -1595 +
-    (33 * Math.floor(days / 12053));
+    (
+      33 *
+      Math.floor(
+        days / 12053
+      )
+    );
+
 
   days %= 12053;
 
+
   jy +=
-    4 * Math.floor(days / 1461);
+    4 *
+    Math.floor(
+      days / 1461
+    );
+
 
   days %= 1461;
+
 
   if(days > 365){
 
     jy +=
-      Math.floor((days - 1) / 365);
+      Math.floor(
+        (days - 1) / 365
+      );
 
     days =
       (days - 1) % 365;
 
   }
 
+
   let jm;
+
   let jd;
+
 
   if(days < 186){
 
     jm =
       1 +
-      Math.floor(days / 31);
+      Math.floor(
+        days / 31
+      );
 
     jd =
       1 +
@@ -1118,7 +1430,9 @@ function gregorianToSolar(gy,gm,gd){
 
     jm =
       7 +
-      Math.floor((days - 186) / 30);
+      Math.floor(
+        (days - 186) / 30
+      );
 
     jd =
       1 +
@@ -1126,10 +1440,15 @@ function gregorianToSolar(gy,gm,gd){
 
   }
 
+
   return {
+
     year:jy,
+
     month:jm,
+
     day:jd
+
   };
 
 }
@@ -1137,20 +1456,31 @@ function gregorianToSolar(gy,gm,gd){
 
 updateClock();
 
-setInterval(updateClock,1000);
+
+setInterval(
+  updateClock,
+  1000
+);
 
 
 /* =====================================================
    SCANNER STATUS
 ===================================================== */
 
-function showScannerStatus(message,type=""){
+function showScannerStatus(
+  message,
+  type=""
+){
 
   const el =
-    document.getElementById("scannerStatus");
+    document.getElementById(
+      "scannerStatus"
+    );
+
 
   el.innerHTML =
     message;
+
 
   el.className =
     type;
@@ -1165,25 +1495,38 @@ function showScannerStatus(message,type=""){
 function extractStaffId(text){
 
   text =
-    String(text || "").trim();
+    String(
+      text || ""
+    ).trim();
+
 
   if(!text){
+
     return "";
+
   }
+
 
   try{
 
     const url =
       new URL(text);
 
+
     const id =
-      url.searchParams.get("id");
+      url.searchParams.get(
+        "id"
+      );
+
 
     if(id){
+
       return id.trim();
+
     }
 
   }catch(e){}
+
 
   return text;
 
@@ -1191,39 +1534,93 @@ function extractStaffId(text){
 
 
 /* =====================================================
-   START SCANNER — FAST & STABLE
+   UPDATE CAMERA BUTTON
+===================================================== */
+
+function updateCameraButton(){
+
+  const button =
+    document.getElementById(
+      "cameraSwitchButton"
+    );
+
+
+  if(!button){
+
+    return;
+
+  }
+
+
+  if(
+    currentFacingMode ===
+    "environment"
+  ){
+
+    button.innerText =
+      "🔄 SWITCH TO FRONT CAMERA";
+
+  }else{
+
+    button.innerText =
+      "🔄 SWITCH TO REAR CAMERA";
+
+  }
+
+}
+
+
+/* =====================================================
+   START SCANNER
 ===================================================== */
 
 function startScanner(){
 
   if(scannerStarted){
+
     return;
+
   }
+
 
   scannerStarted = true;
 
+
   scanner =
-    new Html5Qrcode("reader");
+    new Html5Qrcode(
+      "reader"
+    );
 
 
   const config = {
 
     /* Fast continuous scanning */
+
     fps:30,
 
 
     /* Large detection area */
 
-    qrbox:function(width,height){
+    qrbox:function(
+      width,
+      height
+    ){
 
       const size =
         Math.floor(
-          Math.min(width,height) * 0.98
+          Math.min(
+            width,
+            height
+          ) * 0.98
         );
 
+
       return {
+
         width:size,
+
         height:size
+
       };
 
     },
@@ -1237,12 +1634,18 @@ function startScanner(){
   scanner.start(
 
     {
-      facingMode:"environment"
+
+      facingMode:
+        currentFacingMode
+
     },
+
 
     config,
 
+
     onScanSuccess,
+
 
     function(errorMessage){
 
@@ -1250,11 +1653,16 @@ function startScanner(){
 
     }
 
+
   ).then(function(){
+
+    updateCameraButton();
+
 
     showScannerStatus(
       "📷 READY — SHOW QR CARD TO CAMERA"
     );
+
 
   }).catch(function(error){
 
@@ -1263,10 +1671,12 @@ function startScanner(){
       error
     );
 
+
     showScannerStatus(
       "❌ CAMERA PERMISSION REQUIRED",
       "error"
     );
+
 
     scannerStarted = false;
 
@@ -1276,18 +1686,156 @@ function startScanner(){
 
 
 /* =====================================================
+   SWITCH CAMERA
+===================================================== */
+
+function switchCamera(){
+
+  if(isProcessing){
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "cameraSwitchButton"
+    );
+
+
+  if(button){
+
+    button.disabled = true;
+
+    button.innerText =
+      "⏳ SWITCHING CAMERA...";
+
+  }
+
+
+  const oldScanner =
+    scanner;
+
+
+  function startSelectedCamera(){
+
+    scanner = null;
+
+    scannerStarted = false;
+
+
+    startScanner();
+
+
+    updateCameraButton();
+
+
+    if(button){
+
+      button.disabled = false;
+
+    }
+
+  }
+
+
+  if(!oldScanner){
+
+    currentFacingMode =
+
+      currentFacingMode ===
+      "environment"
+
+        ? "user"
+
+        : "environment";
+
+
+    startSelectedCamera();
+
+    return;
+
+  }
+
+
+  oldScanner.stop()
+
+    .then(function(){
+
+      try{
+
+        oldScanner.clear();
+
+      }catch(e){}
+
+
+      currentFacingMode =
+
+        currentFacingMode ===
+        "environment"
+
+          ? "user"
+
+          : "environment";
+
+
+      startSelectedCamera();
+
+    })
+
+
+    .catch(function(error){
+
+      console.error(
+        "Camera switch error:",
+        error
+      );
+
+
+      try{
+
+        oldScanner.clear();
+
+      }catch(e){}
+
+
+      currentFacingMode =
+
+        currentFacingMode ===
+        "environment"
+
+          ? "user"
+
+          : "environment";
+
+
+      startSelectedCamera();
+
+    });
+
+}
+
+
+/* =====================================================
    QR SUCCESS
 ===================================================== */
 
-function onScanSuccess(decodedText){
+function onScanSuccess(
+  decodedText
+){
 
   if(isProcessing){
+
     return;
+
   }
 
 
   const staffId =
-    extractStaffId(decodedText);
+    extractStaffId(
+      decodedText
+    );
 
 
   if(!staffId){
@@ -1296,6 +1844,7 @@ function onScanSuccess(decodedText){
       "❌ INVALID STAFF QR CODE",
       "error"
     );
+
 
     return;
 
@@ -1311,7 +1860,9 @@ function onScanSuccess(decodedText){
   );
 
 
-  sendAttendance(staffId);
+  sendAttendance(
+    staffId
+  );
 
 }
 
@@ -1320,7 +1871,9 @@ function onScanSuccess(decodedText){
    SEND ATTENDANCE
 ===================================================== */
 
-function sendAttendance(staffId){
+function sendAttendance(
+  staffId
+){
 
   const callbackName =
     "attendanceCallback_" +
@@ -1333,23 +1886,34 @@ function sendAttendance(staffId){
   function finish(){
 
     if(finished){
+
       return;
+
     }
+
 
     finished = true;
 
 
     const script =
-      document.getElementById(callbackName);
+      document.getElementById(
+        callbackName
+      );
 
 
     if(script){
+
       script.remove();
+
     }
 
 
     try{
-      delete window[callbackName];
+
+      delete window[
+        callbackName
+      ];
+
     }catch(e){}
 
   }
@@ -1367,24 +1931,42 @@ function sendAttendance(staffId){
       finish();
 
 
-      showAttendanceResult(response);
+      showAttendanceResult(
+        response
+      );
 
     };
 
 
   const url =
+
     GOOGLE_SCRIPT_URL +
+
     "?mode=attendance" +
+
     "&staffId=" +
-    encodeURIComponent(staffId) +
+
+    encodeURIComponent(
+      staffId
+    ) +
+
     "&deviceId=" +
-    encodeURIComponent(DEVICE_ID) +
+
+    encodeURIComponent(
+      DEVICE_ID
+    ) +
+
     "&callback=" +
-    encodeURIComponent(callbackName);
+
+    encodeURIComponent(
+      callbackName
+    );
 
 
   const script =
-    document.createElement("script");
+    document.createElement(
+      "script"
+    );
 
 
   script.id =
@@ -1412,27 +1994,32 @@ function sendAttendance(staffId){
     };
 
 
-  document.body.appendChild(script);
+  document.body.appendChild(
+    script
+  );
 
 
-  setTimeout(function(){
+  setTimeout(
+    function(){
 
-    if(!finished){
+      if(!finished){
 
-      finish();
-
-
-      isProcessing = false;
+        finish();
 
 
-      showScannerStatus(
-        "❌ SERVER TIMEOUT — PLEASE SCAN AGAIN",
-        "error"
-      );
+        isProcessing = false;
 
-    }
 
-  },15000);
+        showScannerStatus(
+          "❌ SERVER TIMEOUT — PLEASE SCAN AGAIN",
+          "error"
+        );
+
+      }
+
+    },
+    15000
+  );
 
 }
 
@@ -1441,7 +2028,9 @@ function sendAttendance(staffId){
    SHOW ATTENDANCE RESULT
 ===================================================== */
 
-function showAttendanceResult(response){
+function showAttendanceResult(
+  response
+){
 
   console.log(
     "RESULT:",
@@ -1455,37 +2044,60 @@ function showAttendanceResult(response){
       "No response from server."
     );
 
+
     return;
 
   }
 
 
-  if(response.success === true){
+  if(
+    response.success === true
+  ){
 
-    if(response.action === "CHECK_IN"){
+    if(
+      response.action ===
+      "CHECK_IN"
+    ){
 
       showResult(
+
         "✓",
+
         "icon-checkin",
+
         "CHECK-IN SUCCESSFUL",
+
         "Your attendance has been recorded successfully.",
+
         response
+
       );
+
 
       return;
 
     }
 
 
-    if(response.action === "CHECK_OUT"){
+    if(
+      response.action ===
+      "CHECK_OUT"
+    ){
 
       showResult(
+
         "✓",
+
         "icon-checkout",
+
         "CHECK-OUT SUCCESSFUL",
+
         "Your check-out has been recorded successfully.",
+
         response
+
       );
+
 
       return;
 
@@ -1494,15 +2106,25 @@ function showAttendanceResult(response){
   }
 
 
-  if(response.action === "COMPLETED"){
+  if(
+    response.action ===
+    "COMPLETED"
+  ){
 
     showResult(
+
       "🔒",
+
       "icon-completed",
+
       "ATTENDANCE COMPLETED",
+
       "Today's attendance is already completed.",
+
       response
+
     );
+
 
     return;
 
@@ -1510,8 +2132,11 @@ function showAttendanceResult(response){
 
 
   showError(
+
     response.message ||
+
     "Attendance could not be processed."
+
   );
 
 }
@@ -1522,11 +2147,17 @@ function showAttendanceResult(response){
 ===================================================== */
 
 function showResult(
+
   icon,
+
   iconClass,
+
   title,
+
   message,
+
   data
+
 ){
 
   document.getElementById(
@@ -1542,11 +2173,14 @@ function showResult(
 
 
   const iconEl =
-    document.getElementById("resultIcon");
+    document.getElementById(
+      "resultIcon"
+    );
 
 
   iconEl.className =
-    "result-icon " + iconClass;
+    "result-icon " +
+    iconClass;
 
 
   iconEl.innerHTML =
@@ -1565,7 +2199,9 @@ function showResult(
     message;
 
 
-  fillResultData(data);
+  fillResultData(
+    data
+  );
 
 
   isProcessing = true;
@@ -1574,7 +2210,9 @@ function showResult(
   loadTodaySummary();
 
 
-  /* KEEP 10 SECOND NEXT SCAN */
+  /*
+     KEEP 10 SECOND NEXT SCAN
+  */
 
   startAutoNextScan();
 
@@ -1585,7 +2223,9 @@ function showResult(
    ERROR
 ===================================================== */
 
-function showError(message){
+function showError(
+  message
+){
 
   document.getElementById(
     "scannerCard"
@@ -1600,7 +2240,9 @@ function showError(message){
 
 
   const iconEl =
-    document.getElementById("resultIcon");
+    document.getElementById(
+      "resultIcon"
+    );
 
 
   iconEl.className =
@@ -1632,7 +2274,9 @@ function showError(message){
    FILL STAFF DATA
 ===================================================== */
 
-function fillResultData(data){
+function fillResultData(
+  data
+){
 
   document.getElementById(
     "staffName"
@@ -1689,10 +2333,14 @@ function fillResultData(data){
 
 
   const photo =
-    document.getElementById("staffPhoto");
+    document.getElementById(
+      "staffPhoto"
+    );
 
 
-  photo.classList.add("hidden");
+  photo.classList.add(
+    "hidden"
+  );
 
 
   if(data.photo){
@@ -1704,7 +2352,9 @@ function fillResultData(data){
     photo.onload =
       function(){
 
-        photo.classList.remove("hidden");
+        photo.classList.remove(
+          "hidden"
+        );
 
       };
 
@@ -1717,7 +2367,10 @@ function fillResultData(data){
           data.photo
         );
 
-        photo.classList.add("hidden");
+
+        photo.classList.add(
+          "hidden"
+        );
 
       };
 
@@ -1738,6 +2391,7 @@ async function scanNext(){
       autoNextTimer
     );
 
+
     autoNextTimer = null;
 
   }
@@ -1756,7 +2410,9 @@ async function scanNext(){
 
 
   const countdown =
-    document.getElementById("countdown");
+    document.getElementById(
+      "countdown"
+    );
 
 
   if(countdown){
@@ -1770,6 +2426,9 @@ async function scanNext(){
   isProcessing = false;
 
 
+  updateCameraButton();
+
+
   showScannerStatus(
     "📷 READY — SHOW QR CARD TO CAMERA",
     "success"
@@ -1779,7 +2438,8 @@ async function scanNext(){
 
 
 /* =====================================================
-   AUTO NEXT SCAN — KEEP 10 SECONDS
+   AUTO NEXT SCAN
+   KEEP 10 SECONDS
 ===================================================== */
 
 function startAutoNextScan(){
@@ -1790,6 +2450,7 @@ function startAutoNextScan(){
       autoNextTimer
     );
 
+
     autoNextTimer = null;
 
   }
@@ -1799,50 +2460,62 @@ function startAutoNextScan(){
 
 
   const countdown =
-    document.getElementById("countdown");
+    document.getElementById(
+      "countdown"
+    );
 
 
   if(countdown){
 
     countdown.innerText =
+
       "📷 Next scan in " +
+
       seconds +
+
       " seconds...";
 
   }
 
 
   autoNextTimer =
-    setInterval(function(){
 
-      seconds--;
+    setInterval(
+      function(){
 
-
-      if(countdown){
-
-        countdown.innerText =
-          "📷 Next scan in " +
-          seconds +
-          " seconds...";
-
-      }
+        seconds--;
 
 
-      if(seconds <= 0){
+        if(countdown){
 
-        clearInterval(
-          autoNextTimer
-        );
+          countdown.innerText =
+
+            "📷 Next scan in " +
+
+            seconds +
+
+            " seconds...";
+
+        }
 
 
-        autoNextTimer = null;
+        if(seconds <= 0){
+
+          clearInterval(
+            autoNextTimer
+          );
 
 
-        scanNext();
+          autoNextTimer = null;
 
-      }
 
-    },1000);
+          scanNext();
+
+        }
+
+      },
+      1000
+    );
 
 }
 
@@ -1864,7 +2537,9 @@ function loadTodaySummary(){
   function finish(){
 
     if(finished){
+
       return;
+
     }
 
 
@@ -1872,16 +2547,24 @@ function loadTodaySummary(){
 
 
     const script =
-      document.getElementById(callbackName);
+      document.getElementById(
+        callbackName
+      );
 
 
     if(script){
+
       script.remove();
+
     }
 
 
     try{
-      delete window[callbackName];
+
+      delete window[
+        callbackName
+      ];
+
     }catch(e){}
 
   }
@@ -1900,8 +2583,11 @@ function loadTodaySummary(){
 
 
       if(
+
         !response ||
+
         response.success !== true
+
       ){
 
         return;
@@ -1954,14 +2640,22 @@ function loadTodaySummary(){
 
 
   const url =
+
     GOOGLE_SCRIPT_URL +
+
     "?mode=summary" +
+
     "&callback=" +
-    encodeURIComponent(callbackName);
+
+    encodeURIComponent(
+      callbackName
+    );
 
 
   const script =
-    document.createElement("script");
+    document.createElement(
+      "script"
+    );
 
 
   script.id =
@@ -1985,14 +2679,19 @@ function loadTodaySummary(){
     };
 
 
-  document.body.appendChild(script);
+  document.body.appendChild(
+    script
+  );
 
 
-  setTimeout(function(){
+  setTimeout(
+    function(){
 
-    finish();
+      finish();
 
-  },10000);
+    },
+    10000
+  );
 
 }
 
@@ -2007,7 +2706,12 @@ window.addEventListener(
 
     loadTodaySummary();
 
+
     startScanner();
+
+
+    updateCameraButton();
+
 
     setInterval(
       loadTodaySummary,
@@ -2020,4 +2724,5 @@ window.addEventListener(
 </script>
 
 </body>
+
 </html>
