@@ -408,7 +408,7 @@ body{
 }
 
 /* =====================================================
-   PORTRAIT TABLET - PROFESSIONAL ONE SCREEN
+   PORTRAIT TABLET
 ===================================================== */
 
 @media (orientation:portrait) and (min-width:600px){
@@ -434,9 +434,7 @@ body{
     overflow:hidden;
   }
 
-  /* ===================================================
-     HEADER
-  =================================================== */
+  /* HEADER */
 
   .header{
     flex:none;
@@ -467,9 +465,7 @@ body{
     line-height:11px;
   }
 
-  /* ===================================================
-     SUMMARY TITLE
-  =================================================== */
+  /* SUMMARY */
 
   .summary-title{
     flex:none;
@@ -486,38 +482,21 @@ body{
     margin:0 0 3px;
   }
 
-  /* ===================================================
-     PROFESSIONAL SUMMARY
-     3 COLUMNS × 2 ROWS
-  =================================================== */
-
   .summary{
     flex:none;
-
     display:grid;
-
-    grid-template-columns:
-      repeat(3,1fr);
-
-    grid-template-rows:
-      repeat(2,1fr);
-
+    grid-template-columns:repeat(3,1fr);
+    grid-template-rows:repeat(2,1fr);
     gap:5px;
-
     margin:0 0 5px;
-
     width:100%;
   }
 
   .summary-box{
-
     min-height:45px;
     height:45px;
-
     padding:4px 3px;
-
     border-radius:9px;
-
     border:1px solid rgba(255,255,255,.18);
 
     background:
@@ -531,342 +510,196 @@ body{
       0 3px 10px rgba(0,0,0,.18);
 
     backdrop-filter:blur(10px);
-
   }
 
   .summary-box::before{
-
     left:18%;
     right:18%;
-
     height:2px;
-
   }
 
   .summary-number{
-
     font-size:18px;
     line-height:19px;
-
     font-weight:700;
-
     letter-spacing:.2px;
-
   }
 
   .summary-label{
-
     font-size:8px;
     line-height:9px;
-
     margin-top:3px;
-
     font-weight:600;
-
     letter-spacing:.45px;
-
     opacity:.90;
-
     white-space:nowrap;
-
   }
 
-  /* ===================================================
-     SCANNER CARD
-  =================================================== */
+  /* SCANNER CARD */
 
   #scannerCard{
-
     flex:none;
-
     padding:4px;
-
     border-radius:9px;
-
     margin:0;
-
   }
 
   .scanner-title{
-
     font-size:11px;
     line-height:13px;
-
     margin-bottom:2px;
-
     letter-spacing:.2px;
-
   }
 
-  #reader{
-  width:100%;
-  max-width:360px;
-  height:360px;
-  margin:auto;
-  border-radius:10px;
-  overflow:hidden;
-}
+  /* LARGE TABLET SCANNER */
 
-#reader video{
-  width:100%!important;
-  height:360px!important;
-  max-height:360px!important;
-  object-fit:cover;
-}
+  #reader{
+    width:100%;
+    max-width:360px;
+    height:360px;
+    margin:auto;
+    border-radius:10px;
+    overflow:hidden;
+  }
+
+  #reader video{
+    width:100%!important;
+    height:360px!important;
+    max-height:360px!important;
+    object-fit:cover;
+  }
 
   #reader__dashboard{
-
-    padding:0 !important;
-    margin:0 !important;
-
+    padding:0!important;
+    margin:0!important;
   }
 
   #reader__dashboard_section{
-
-    padding:0 !important;
-    margin:0 !important;
-
+    padding:0!important;
+    margin:0!important;
   }
 
   #reader__dashboard_section_csr{
-
-    margin:0 !important;
-    padding:0 !important;
-
+    margin:0!important;
+    padding:0!important;
   }
 
   #scannerStatus{
-
     margin-top:2px;
-
     padding:3px;
-
     font-size:8px;
-
     line-height:10px;
-
     border-radius:5px;
-
   }
 
-  /* ===================================================
-     RESULT CARD
-  =================================================== */
+  /* RESULT CARD */
 
   #resultCard{
-
     flex:none;
-
     width:100%;
-
-    margin:0 !important;
-
-    padding:4px !important;
-
+    margin:0!important;
+    padding:4px!important;
     border-radius:8px;
-
     max-height:calc(100vh - 6px);
-
     overflow:hidden;
-
   }
-
-  /* ===================================================
-     RESULT ICON
-  =================================================== */
 
   .result-icon{
-
-    width:38px !important;
-    height:38px !important;
-
-    font-size:20px !important;
-
-    margin:0 auto 2px !important;
-
+    width:38px!important;
+    height:38px!important;
+    font-size:20px!important;
+    margin:0 auto 2px!important;
   }
-
-  /* ===================================================
-     RESULT TITLE
-  =================================================== */
 
   #resultTitle{
-
-    font-size:16px !important;
-
-    line-height:18px !important;
-
-    margin:0 !important;
-
+    font-size:16px!important;
+    line-height:18px!important;
+    margin:0!important;
   }
-
-  /* ===================================================
-     RESULT MESSAGE
-  =================================================== */
 
   #resultMessage{
-
-    font-size:8px !important;
-
-    line-height:10px !important;
-
-    margin:2px 0 3px !important;
-
+    font-size:8px!important;
+    line-height:10px!important;
+    margin:2px 0 3px!important;
   }
-
-  /* ===================================================
-     STAFF PHOTO
-  =================================================== */
 
   .staff-photo{
-
-    width:62px !important;
-    height:62px !important;
-
-    border-width:2px !important;
-
-    margin:2px auto 3px !important;
-
+    width:62px!important;
+    height:62px!important;
+    border-width:2px!important;
+    margin:2px auto 3px!important;
   }
 
-  /* ===================================================
-     STAFF NAME
-  =================================================== */
-
   #staffName{
-
-    font-size:16px !important;
-
-    line-height:18px !important;
-
-    margin:0 !important;
-
+    font-size:16px!important;
+    line-height:18px!important;
+    margin:0!important;
   }
 
   #staffId{
-
-    margin-top:1px !important;
-
-    font-size:8px !important;
-
-    line-height:10px !important;
-
+    margin-top:1px!important;
+    font-size:8px!important;
+    line-height:10px!important;
   }
 
-  /* ===================================================
-     INFORMATION BOX
-  =================================================== */
-
   .info-box{
-
     width:100%;
-
-    max-width:500px !important;
-
-    margin:4px auto !important;
-
-    border-radius:6px !important;
-
+    max-width:500px!important;
+    margin:4px auto!important;
+    border-radius:6px!important;
   }
 
   .info-row{
-
-    display:flex !important;
-
-    flex-direction:row !important;
-
-    justify-content:space-between !important;
-
-    align-items:center !important;
-
-    gap:5px !important;
-
-    padding:3px 7px !important;
-
-    min-height:20px !important;
-
-    font-size:8px !important;
-
-    line-height:10px !important;
-
+    display:flex!important;
+    flex-direction:row!important;
+    justify-content:space-between!important;
+    align-items:center!important;
+    gap:5px!important;
+    padding:3px 7px!important;
+    min-height:20px!important;
+    font-size:8px!important;
+    line-height:10px!important;
   }
 
   .info-label{
-
-    font-size:8px !important;
-
-    line-height:10px !important;
-
+    font-size:8px!important;
+    line-height:10px!important;
     white-space:nowrap;
-
   }
 
   .info-value{
-
-    font-size:8px !important;
-
-    line-height:10px !important;
-
-    text-align:right !important;
-
+    font-size:8px!important;
+    line-height:10px!important;
+    text-align:right!important;
     white-space:nowrap;
-
   }
 
-  /* ===================================================
-     SCAN NEXT BUTTON
-  =================================================== */
-
   .scan-next{
-
     width:100%;
-
-    max-width:500px !important;
-
-    padding:6px !important;
-
-    min-height:28px !important;
-
-    border-radius:6px !important;
-
-    font-size:10px !important;
-
-    line-height:12px !important;
-
+    max-width:500px!important;
+    padding:6px!important;
+    min-height:28px!important;
+    border-radius:6px!important;
+    font-size:10px!important;
+    line-height:12px!important;
   }
 
   #countdown{
-
-    margin-top:2px !important;
-
-    font-size:8px !important;
-
-    line-height:10px !important;
-
+    margin-top:2px!important;
+    font-size:8px!important;
+    line-height:10px!important;
   }
 
-  /* ===================================================
-     FOOTER
-  =================================================== */
-
   .footer{
-
     flex:none;
-
     margin-top:2px;
-
     padding:2px;
-
     font-size:7px;
-
     line-height:9px;
-
   }
 
   .footer br{
-
     display:none;
-
   }
 
 }
@@ -878,9 +711,7 @@ body{
 @media (orientation:portrait) and (min-width:600px){
 
   .container:has(#resultCard[style*="block"]) .footer{
-
-    display:none !important;
-
+    display:none!important;
   }
 
 }
@@ -892,9 +723,7 @@ body{
 
 <div class="container">
 
-  <!-- =================================================
-       HEADER
-  ================================================= -->
+  <!-- HEADER -->
 
   <div class="header">
 
@@ -913,9 +742,7 @@ body{
   </div>
 
 
-  <!-- =================================================
-       TODAY SUMMARY
-  ================================================= -->
+  <!-- TODAY SUMMARY -->
 
   <div class="summary-title">
     📊 TODAY'S ATTENDANCE SUMMARY
@@ -960,9 +787,7 @@ body{
   </div>
 
 
-  <!-- =================================================
-       SCANNER
-  ================================================= -->
+  <!-- SCANNER -->
 
   <div class="card" id="scannerCard">
 
@@ -979,9 +804,7 @@ body{
   </div>
 
 
-  <!-- =================================================
-       RESULT
-  ================================================= -->
+  <!-- RESULT -->
 
   <div class="card" id="resultCard">
 
@@ -998,15 +821,11 @@ body{
       Attendance recorded successfully.
     </div>
 
-
-    <!-- STAFF PHOTO -->
-
     <img
       id="staffPhoto"
       class="staff-photo hidden"
       alt="Staff Photo"
     >
-
 
     <div id="staffName">
       Staff Name
@@ -1016,8 +835,6 @@ body{
       STAFF ID
     </div>
 
-
-    <!-- STAFF INFORMATION -->
 
     <div class="info-box">
 
@@ -1136,9 +953,7 @@ body{
   </div>
 
 
-  <!-- =================================================
-       FOOTER
-  ================================================= -->
+  <!-- FOOTER -->
 
   <div class="footer">
 
@@ -1235,18 +1050,18 @@ function updateClock(){
     new Intl.DateTimeFormat(
       "en-US",
       {
-        timeZone: "Asia/Kabul",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true
+        timeZone:"Asia/Kabul",
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit",
+        hour12:true
       }
     ).format(now);
 
 }
 
 
-function gregorianToSolar(gy, gm, gd){
+function gregorianToSolar(gy,gm,gd){
 
   let g_d_m = [
     0,31,59,90,120,151,
@@ -1375,9 +1190,8 @@ function extractStaffId(text){
 }
 
 
-```javascript
 /* =====================================================
-   START SCANNER — VERY FAST QR DETECTION
+   START SCANNER — FAST & STABLE
 ===================================================== */
 
 function startScanner(){
@@ -1394,11 +1208,12 @@ function startScanner(){
 
   const config = {
 
-    /* Fast camera scanning */
-    fps: 30,
+    /* Fast continuous scanning */
+    fps:30,
 
 
     /* Large detection area */
+
     qrbox:function(width,height){
 
       const size =
@@ -1414,13 +1229,7 @@ function startScanner(){
     },
 
 
-    aspectRatio:1.0,
-
-
-    /* Use the QR format only */
-    formatsToSupport:[
-      Html5QrcodeSupportedFormats.QR_CODE
-    ]
+    aspectRatio:1.0
 
   };
 
@@ -1437,14 +1246,14 @@ function startScanner(){
 
     function(errorMessage){
 
-      /* Keep searching until QR is found */
+      /* Keep searching continuously */
 
     }
 
   ).then(function(){
 
     showScannerStatus(
-      "📷 READY — SHOW QR CARD"
+      "📷 READY — SHOW QR CARD TO CAMERA"
     );
 
   }).catch(function(error){
@@ -1464,7 +1273,7 @@ function startScanner(){
   });
 
 }
-```
+
 
 /* =====================================================
    QR SUCCESS
@@ -1476,8 +1285,10 @@ function onScanSuccess(decodedText){
     return;
   }
 
+
   const staffId =
     extractStaffId(decodedText);
+
 
   if(!staffId){
 
@@ -1487,14 +1298,18 @@ function onScanSuccess(decodedText){
     );
 
     return;
+
   }
 
+
   isProcessing = true;
+
 
   showScannerStatus(
     "⏳ VERIFYING STAFF...",
     "processing"
   );
+
 
   sendAttendance(staffId);
 
@@ -1523,12 +1338,15 @@ function sendAttendance(staffId){
 
     finished = true;
 
+
     const script =
       document.getElementById(callbackName);
+
 
     if(script){
       script.remove();
     }
+
 
     try{
       delete window[callbackName];
@@ -1545,7 +1363,9 @@ function sendAttendance(staffId){
         response
       );
 
+
       finish();
+
 
       showAttendanceResult(response);
 
@@ -1566,8 +1386,10 @@ function sendAttendance(staffId){
   const script =
     document.createElement("script");
 
+
   script.id =
     callbackName;
+
 
   script.src =
     url;
@@ -1578,7 +1400,9 @@ function sendAttendance(staffId){
 
       finish();
 
+
       isProcessing = false;
+
 
       showScannerStatus(
         "❌ CONNECTION ERROR — CHECK INTERNET",
@@ -1597,7 +1421,9 @@ function sendAttendance(staffId){
 
       finish();
 
+
       isProcessing = false;
+
 
       showScannerStatus(
         "❌ SERVER TIMEOUT — PLEASE SCAN AGAIN",
@@ -1617,12 +1443,17 @@ function sendAttendance(staffId){
 
 function showAttendanceResult(response){
 
-  console.log("RESULT:",response);
+  console.log(
+    "RESULT:",
+    response
+  );
 
 
   if(!response){
 
-    showError("No response from server.");
+    showError(
+      "No response from server."
+    );
 
     return;
 
@@ -1703,35 +1534,47 @@ function showResult(
   ).style.display =
     "none";
 
+
   document.getElementById(
     "resultCard"
   ).style.display =
     "block";
 
+
   const iconEl =
     document.getElementById("resultIcon");
+
 
   iconEl.className =
     "result-icon " + iconClass;
 
+
   iconEl.innerHTML =
     icon;
+
 
   document.getElementById(
     "resultTitle"
   ).innerText =
     title;
 
+
   document.getElementById(
     "resultMessage"
   ).innerText =
     message;
 
+
   fillResultData(data);
+
 
   isProcessing = true;
 
+
   loadTodaySummary();
+
+
+  /* KEEP 10 SECOND NEXT SCAN */
 
   startAutoNextScan();
 
@@ -1759,8 +1602,10 @@ function showError(message){
   const iconEl =
     document.getElementById("resultIcon");
 
+
   iconEl.className =
     "result-icon icon-error";
+
 
   iconEl.innerHTML =
     "⚠";
@@ -1855,6 +1700,7 @@ function fillResultData(data){
     photo.src =
       data.photo;
 
+
     photo.onload =
       function(){
 
@@ -1888,16 +1734,20 @@ async function scanNext(){
 
   if(autoNextTimer){
 
-    clearInterval(autoNextTimer);
+    clearInterval(
+      autoNextTimer
+    );
 
     autoNextTimer = null;
 
   }
 
+
   document.getElementById(
     "resultCard"
   ).style.display =
     "none";
+
 
   document.getElementById(
     "scannerCard"
@@ -1907,6 +1757,7 @@ async function scanNext(){
 
   const countdown =
     document.getElementById("countdown");
+
 
   if(countdown){
 
@@ -1928,23 +1779,28 @@ async function scanNext(){
 
 
 /* =====================================================
-   AUTO NEXT SCAN — 10 SECONDS
+   AUTO NEXT SCAN — KEEP 10 SECONDS
 ===================================================== */
 
 function startAutoNextScan(){
 
   if(autoNextTimer){
 
-    clearInterval(autoNextTimer);
+    clearInterval(
+      autoNextTimer
+    );
 
     autoNextTimer = null;
 
   }
 
+
   let seconds = 10;
+
 
   const countdown =
     document.getElementById("countdown");
+
 
   if(countdown){
 
@@ -1978,7 +1834,9 @@ function startAutoNextScan(){
           autoNextTimer
         );
 
+
         autoNextTimer = null;
+
 
         scanNext();
 
@@ -2009,11 +1867,13 @@ function loadTodaySummary(){
       return;
     }
 
+
     finished = true;
 
 
     const script =
       document.getElementById(callbackName);
+
 
     if(script){
       script.remove();
@@ -2031,6 +1891,7 @@ function loadTodaySummary(){
     function(response){
 
       finish();
+
 
       console.log(
         "Summary:",
@@ -2115,6 +1976,7 @@ function loadTodaySummary(){
     function(){
 
       finish();
+
 
       console.log(
         "Summary connection error"
