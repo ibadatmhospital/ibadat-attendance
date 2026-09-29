@@ -313,6 +313,119 @@ body{
 
 }
 
+/* =====================================================
+   PORTRAIT TABLET - ONE SCREEN MODE
+===================================================== */
+
+@media (orientation:portrait) and (min-width:600px){
+
+  body{
+    overflow:hidden;
+  }
+
+  .container{
+    max-width:100%;
+    padding:6px 12px;
+  }
+
+  /* HEADER */
+
+  .header{
+    padding:3px 5px 6px;
+  }
+
+  .logo{
+    font-size:28px;
+  }
+
+  .header h1{
+    margin:2px 0;
+    font-size:22px;
+    letter-spacing:.5px;
+  }
+
+  .header p{
+    margin:2px 0;
+    font-size:12px;
+  }
+
+  .live{
+    margin-top:3px;
+    font-size:11px;
+  }
+
+  /* SUMMARY */
+
+  .summary-title{
+    font-size:14px;
+    margin:2px 0 4px;
+  }
+
+  .summary-date{
+    font-size:10px;
+    margin-bottom:5px;
+  }
+
+  .summary{
+    grid-template-columns:repeat(6,1fr);
+    gap:5px;
+    margin-bottom:7px;
+  }
+
+  .summary-box{
+    border-radius:8px;
+    padding:6px 2px;
+  }
+
+  .summary-number{
+    font-size:17px;
+  }
+
+  .summary-label{
+    font-size:8px;
+    margin-top:2px;
+  }
+
+  /* SCANNER */
+
+  .card{
+    border-radius:12px;
+    padding:8px;
+  }
+
+  .scanner-title{
+    font-size:15px;
+    margin-bottom:5px;
+  }
+
+  #reader{
+    max-width:300px;
+    border-radius:10px;
+  }
+
+  #reader video{
+    width:100% !important;
+    max-height:260px !important;
+    object-fit:cover;
+  }
+
+  #scannerStatus{
+    margin-top:5px;
+    padding:6px;
+    font-size:11px;
+    border-radius:7px;
+  }
+
+  /* FOOTER */
+
+  .footer{
+    margin-top:5px;
+    padding:4px;
+    font-size:9px;
+  }
+
+}
+
 </style>
 </head>
 
@@ -607,7 +720,6 @@ function updateClock(){
 
   const now = new Date();
 
-  // Afghanistan / Kabul time
   const afghanistanDate =
     new Intl.DateTimeFormat(
       "en-US",
@@ -640,7 +752,6 @@ function updateClock(){
   });
 
 
-  // Convert Gregorian → Afghanistan Solar Hijri
   const solar =
     gregorianToSolar(year, month, day);
 
@@ -651,7 +762,6 @@ function updateClock(){
     solar.day;
 
 
-  // Afghanistan time
   document.getElementById("liveTime").innerText =
     new Intl.DateTimeFormat(
       "en-US",
@@ -667,25 +777,11 @@ function updateClock(){
 }
 
 
-/* =========================================
-   GREGORIAN → AFGHANISTAN SOLAR HIJRI
-========================================= */
-
 function gregorianToSolar(gy, gm, gd){
 
   let g_d_m = [
-    0,
-    31,
-    59,
-    90,
-    120,
-    151,
-    181,
-    212,
-    243,
-    273,
-    304,
-    334
+    0,31,59,90,120,151,
+    181,212,243,273,304,334
   ];
 
   let gy2 =
@@ -747,19 +843,17 @@ function gregorianToSolar(gy, gm, gd){
   }
 
   return {
-    year: jy,
-    month: jm,
-    day: jd
+    year:jy,
+    month:jm,
+    day:jd
   };
 
 }
 
 
-/* START CLOCK */
-
 updateClock();
 
-setInterval(updateClock, 1000);
+setInterval(updateClock,1000);
 
 
 /* =====================================================
@@ -771,9 +865,11 @@ function showScannerStatus(message,type=""){
   const el =
     document.getElementById("scannerStatus");
 
-  el.innerHTML = message;
+  el.innerHTML =
+    message;
 
-  el.className = type;
+  el.className =
+    type;
 
 }
 
@@ -860,11 +956,7 @@ function startScanner(){
 
     onScanSuccess,
 
-    function(errorMessage){
-
-      // normal scan errors ignored
-
-    }
+    function(errorMessage){}
 
   ).then(function(){
 
@@ -976,15 +1068,11 @@ function sendAttendance(staffId){
 
   const url =
     GOOGLE_SCRIPT_URL +
-
     "?mode=attendance" +
-
     "&staffId=" +
     encodeURIComponent(staffId) +
-
     "&deviceId=" +
     encodeURIComponent(DEVICE_ID) +
-
     "&callback=" +
     encodeURIComponent(callbackName);
 
@@ -1017,7 +1105,6 @@ function sendAttendance(staffId){
   document.body.appendChild(script);
 
 
-  // Prevent endless VERIFYING
   setTimeout(function(){
 
     if(!finished){
@@ -1050,6 +1137,7 @@ function showAttendanceResult(response){
   if(!response){
 
     showError("No response from server.");
+
     return;
 
   }
@@ -1115,6 +1203,7 @@ function showAttendanceResult(response){
 /* =====================================================
    SHOW RESULT
 ===================================================== */
+
 function showResult(
   icon,
   iconClass,
@@ -1123,33 +1212,45 @@ function showResult(
   data
 ){
 
-  // Hide scanner and show result
-  document.getElementById("scannerCard").style.display = "none";
-  document.getElementById("resultCard").style.display = "block";
+  document.getElementById(
+    "scannerCard"
+  ).style.display =
+    "none";
 
-  const iconEl = document.getElementById("resultIcon");
+  document.getElementById(
+    "resultCard"
+  ).style.display =
+    "block";
 
-  iconEl.className = "result-icon " + iconClass;
-  iconEl.innerHTML = icon;
+  const iconEl =
+    document.getElementById("resultIcon");
 
-  document.getElementById("resultTitle").innerText = title;
+  iconEl.className =
+    "result-icon " + iconClass;
 
-  document.getElementById("resultMessage").innerText = message;
+  iconEl.innerHTML =
+    icon;
 
-  // Fill staff information
+  document.getElementById(
+    "resultTitle"
+  ).innerText =
+    title;
+
+  document.getElementById(
+    "resultMessage"
+  ).innerText =
+    message;
+
   fillResultData(data);
 
-  // IMPORTANT:
-  // Keep processing ON while result is displayed.
-  // This prevents another QR scan during these 10 seconds.
   isProcessing = true;
 
-  // Update today's summary
   loadTodaySummary();
 
-  // Automatically return to scanner after 10 seconds
   startAutoNextScan();
+
 }
+
 
 /* =====================================================
    ERROR
@@ -1159,12 +1260,14 @@ function showError(message){
 
   document.getElementById(
     "scannerCard"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 
   document.getElementById(
     "resultCard"
-  ).style.display = "block";
+  ).style.display =
+    "block";
 
 
   const iconEl =
@@ -1254,8 +1357,6 @@ function fillResultData(data){
     data.status || "-";
 
 
-  /* PHOTO */
-
   const photo =
     document.getElementById("staffPhoto");
 
@@ -1292,6 +1393,7 @@ function fillResultData(data){
 
 }
 
+
 /* =====================================================
    SCAN NEXT
 ===================================================== */
@@ -1299,26 +1401,43 @@ function fillResultData(data){
 async function scanNext(){
 
   if(autoNextTimer){
+
     clearInterval(autoNextTimer);
+
     autoNextTimer = null;
+
   }
 
-  document.getElementById("resultCard").style.display = "none";
-  document.getElementById("scannerCard").style.display = "block";
+  document.getElementById(
+    "resultCard"
+  ).style.display =
+    "none";
 
-  const countdown = document.getElementById("countdown");
+  document.getElementById(
+    "scannerCard"
+  ).style.display =
+    "block";
+
+
+  const countdown =
+    document.getElementById("countdown");
 
   if(countdown){
-    countdown.innerText = "";
+
+    countdown.innerText =
+      "";
+
   }
 
-  // Allow next QR scan
+
   isProcessing = false;
+
 
   showScannerStatus(
     "📷 READY — SCAN STAFF QR CODE",
     "success"
   );
+
 }
 
 
@@ -1329,8 +1448,11 @@ async function scanNext(){
 function startAutoNextScan(){
 
   if(autoNextTimer){
+
     clearInterval(autoNextTimer);
+
     autoNextTimer = null;
+
   }
 
   let seconds = 10;
@@ -1339,31 +1461,47 @@ function startAutoNextScan(){
     document.getElementById("countdown");
 
   if(countdown){
+
     countdown.innerText =
-      "📷 Next scan in " + seconds + " seconds...";
+      "📷 Next scan in " +
+      seconds +
+      " seconds...";
+
   }
 
-  autoNextTimer = setInterval(function(){
 
-    seconds--;
+  autoNextTimer =
+    setInterval(function(){
 
-    if(countdown){
-      countdown.innerText =
-        "📷 Next scan in " + seconds + " seconds...";
-    }
+      seconds--;
 
-    if(seconds <= 0){
 
-      clearInterval(autoNextTimer);
-      autoNextTimer = null;
+      if(countdown){
 
-      // Return to scanner automatically
-      scanNext();
+        countdown.innerText =
+          "📷 Next scan in " +
+          seconds +
+          " seconds...";
 
-    }
+      }
 
-  }, 1000);
+
+      if(seconds <= 0){
+
+        clearInterval(
+          autoNextTimer
+        );
+
+        autoNextTimer = null;
+
+        scanNext();
+
+      }
+
+    },1000);
+
 }
+
 
 /* =====================================================
    TODAY SUMMARY
@@ -1418,7 +1556,9 @@ function loadTodaySummary(){
         !response ||
         response.success !== true
       ){
+
         return;
+
       }
 
 
@@ -1468,9 +1608,7 @@ function loadTodaySummary(){
 
   const url =
     GOOGLE_SCRIPT_URL +
-
     "?mode=summary" +
-
     "&callback=" +
     encodeURIComponent(callbackName);
 
@@ -1523,7 +1661,6 @@ window.addEventListener(
 
     startScanner();
 
-    // Refresh summary every 30 seconds
     setInterval(
       loadTodaySummary,
       30000
