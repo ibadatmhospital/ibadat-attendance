@@ -599,32 +599,20 @@ body{
   }
 
   #reader{
+  width:100%;
+  max-width:360px;
+  height:360px;
+  margin:auto;
+  border-radius:10px;
+  overflow:hidden;
+}
 
-    width:100%;
-
-    max-width:230px;
-
-    height:230px;
-
-    margin:auto;
-
-    border-radius:7px;
-
-    overflow:hidden;
-
-  }
-
-  #reader video{
-
-    width:100% !important;
-
-    height:230px !important;
-
-    max-height:230px !important;
-
-    object-fit:cover;
-
-  }
+#reader video{
+  width:100%!important;
+  height:360px!important;
+  max-height:360px!important;
+  object-fit:cover;
+}
 
   #reader__dashboard{
 
@@ -1426,7 +1414,7 @@ function startScanner(){
 
       const size =
         Math.floor(
-          Math.min(width,height) * 0.92
+          Math.min(width,height) * 0.98
         );
 
       return {
