@@ -31,7 +31,9 @@ body{
   padding:20px;
 }
 
-/* HEADER */
+/* =====================================================
+   HEADER
+===================================================== */
 
 .header{
   text-align:center;
@@ -59,7 +61,9 @@ body{
   opacity:.9;
 }
 
-/* SUMMARY */
+/* =====================================================
+   SUMMARY
+===================================================== */
 
 .summary-title{
   text-align:center;
@@ -102,7 +106,9 @@ body{
   margin-bottom:15px;
 }
 
-/* SCANNER */
+/* =====================================================
+   SCANNER
+===================================================== */
 
 .card{
   background:rgba(255,255,255,.10);
@@ -145,7 +151,9 @@ body{
   background:rgba(255,0,0,.15)!important;
 }
 
-/* RESULT */
+/* =====================================================
+   RESULT
+===================================================== */
 
 #resultCard{
   display:none;
@@ -191,7 +199,9 @@ body{
   opacity:.8;
 }
 
-/* PHOTO */
+/* =====================================================
+   PHOTO
+===================================================== */
 
 .staff-photo{
   width:125px;
@@ -218,6 +228,10 @@ body{
   opacity:.75;
   font-size:14px;
 }
+
+/* =====================================================
+   STAFF INFORMATION
+===================================================== */
 
 .info-box{
   max-width:600px;
@@ -249,7 +263,9 @@ body{
   text-align:right;
 }
 
-/* BUTTON */
+/* =====================================================
+   BUTTON
+===================================================== */
 
 .scan-next{
   width:100%;
@@ -268,7 +284,9 @@ body{
   opacity:.9;
 }
 
-/* FOOTER */
+/* =====================================================
+   FOOTER
+===================================================== */
 
 .footer{
   text-align:center;
@@ -278,7 +296,9 @@ body{
   opacity:.7;
 }
 
-/* MOBILE */
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media(max-width:800px){
 
@@ -314,114 +334,311 @@ body{
 }
 
 /* =====================================================
-   PORTRAIT TABLET - ONE SCREEN MODE
+   PORTRAIT TABLET - ONE SCREEN
 ===================================================== */
 
 @media (orientation:portrait) and (min-width:600px){
+
+  html,
+  body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+  }
 
   body{
     overflow:hidden;
   }
 
   .container{
-    max-width:100%;
-    padding:6px 12px;
+    width:100%;
+    max-width:none;
+    height:100vh;
+    padding:3px 8px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
   }
 
-  /* HEADER */
+  /* ===================================================
+     HEADER
+  =================================================== */
 
   .header{
-    padding:3px 5px 6px;
+    flex:none;
+    padding:1px 5px 3px;
   }
 
   .logo{
-    font-size:28px;
+    font-size:22px;
+    line-height:22px;
   }
 
   .header h1{
-    margin:2px 0;
-    font-size:22px;
-    letter-spacing:.5px;
+    margin:1px 0;
+    font-size:18px;
+    line-height:20px;
+    letter-spacing:.3px;
   }
 
   .header p{
-    margin:2px 0;
-    font-size:12px;
+    margin:1px 0;
+    font-size:9px;
+    line-height:11px;
   }
 
   .live{
-    margin-top:3px;
-    font-size:11px;
+    margin-top:1px;
+    font-size:9px;
+    line-height:11px;
   }
 
-  /* SUMMARY */
+  /* ===================================================
+     SUMMARY
+  =================================================== */
 
   .summary-title{
-    font-size:14px;
-    margin:2px 0 4px;
+    flex:none;
+    font-size:11px;
+    line-height:13px;
+    margin:2px 0 1px;
   }
 
   .summary-date{
-    font-size:10px;
-    margin-bottom:5px;
+    flex:none;
+    font-size:8px;
+    line-height:10px;
+    margin:0 0 2px;
   }
 
   .summary{
+    flex:none;
     grid-template-columns:repeat(6,1fr);
-    gap:5px;
-    margin-bottom:7px;
+    gap:3px;
+    margin:0 0 4px;
   }
 
   .summary-box{
-    border-radius:8px;
-    padding:6px 2px;
+    border-radius:5px;
+    padding:3px 1px;
+    min-height:35px;
   }
 
   .summary-number{
-    font-size:17px;
+    font-size:13px;
+    line-height:15px;
   }
 
   .summary-label{
-    font-size:8px;
-    margin-top:2px;
+    font-size:6px;
+    line-height:7px;
+    margin-top:1px;
   }
 
-  /* SCANNER */
+  /* ===================================================
+     SCANNER
+  =================================================== */
 
-  .card{
-    border-radius:12px;
-    padding:8px;
+  #scannerCard{
+    flex:none;
+    padding:4px;
+    border-radius:8px;
+    margin:0;
   }
 
   .scanner-title{
-    font-size:15px;
-    margin-bottom:5px;
+    font-size:11px;
+    line-height:13px;
+    margin-bottom:2px;
   }
 
   #reader{
-    max-width:300px;
-    border-radius:10px;
+    width:100%;
+    max-width:230px;
+    height:230px;
+    margin:auto;
+    border-radius:7px;
+    overflow:hidden;
   }
 
   #reader video{
     width:100% !important;
-    max-height:260px !important;
+    height:230px !important;
+    max-height:230px !important;
     object-fit:cover;
   }
 
-  #scannerStatus{
-    margin-top:5px;
-    padding:6px;
-    font-size:11px;
-    border-radius:7px;
+  #reader__dashboard{
+    padding:0 !important;
+    margin:0 !important;
   }
 
-  /* FOOTER */
+  #reader__dashboard_section{
+    padding:0 !important;
+    margin:0 !important;
+  }
+
+  #reader__dashboard_section_csr{
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  #scannerStatus{
+    margin-top:2px;
+    padding:3px;
+    font-size:8px;
+    line-height:10px;
+    border-radius:5px;
+  }
+
+  /* ===================================================
+     RESULT CARD
+  =================================================== */
+
+  #resultCard{
+    flex:none;
+    width:100%;
+    margin:0 !important;
+    padding:4px !important;
+    border-radius:8px;
+    max-height:calc(100vh - 6px);
+    overflow:hidden;
+  }
+
+  /* RESULT ICON */
+
+  .result-icon{
+    width:38px !important;
+    height:38px !important;
+    font-size:20px !important;
+    margin:0 auto 2px !important;
+  }
+
+  /* RESULT TITLE */
+
+  #resultTitle{
+    font-size:16px !important;
+    line-height:18px !important;
+    margin:0 !important;
+  }
+
+  /* RESULT MESSAGE */
+
+  #resultMessage{
+    font-size:8px !important;
+    line-height:10px !important;
+    margin:2px 0 3px !important;
+  }
+
+  /* ===================================================
+     STAFF PHOTO
+  =================================================== */
+
+  .staff-photo{
+    width:62px !important;
+    height:62px !important;
+    border-width:2px !important;
+    margin:2px auto 3px !important;
+  }
+
+  /* ===================================================
+     STAFF NAME
+  =================================================== */
+
+  #staffName{
+    font-size:16px !important;
+    line-height:18px !important;
+    margin:0 !important;
+  }
+
+  #staffId{
+    margin-top:1px !important;
+    font-size:8px !important;
+    line-height:10px !important;
+  }
+
+  /* ===================================================
+     INFORMATION BOX
+  =================================================== */
+
+  .info-box{
+    width:100%;
+    max-width:500px !important;
+    margin:4px auto !important;
+    border-radius:6px !important;
+  }
+
+  .info-row{
+    display:flex !important;
+    flex-direction:row !important;
+    justify-content:space-between !important;
+    align-items:center !important;
+    gap:5px !important;
+    padding:3px 7px !important;
+    min-height:20px !important;
+    font-size:8px !important;
+    line-height:10px !important;
+  }
+
+  .info-label{
+    font-size:8px !important;
+    line-height:10px !important;
+    white-space:nowrap;
+  }
+
+  .info-value{
+    font-size:8px !important;
+    line-height:10px !important;
+    text-align:right !important;
+    white-space:nowrap;
+  }
+
+  /* ===================================================
+     SCAN NEXT BUTTON
+  =================================================== */
+
+  .scan-next{
+    width:100%;
+    max-width:500px !important;
+    padding:6px !important;
+    min-height:28px !important;
+    border-radius:6px !important;
+    font-size:10px !important;
+    line-height:12px !important;
+  }
+
+  #countdown{
+    margin-top:2px !important;
+    font-size:8px !important;
+    line-height:10px !important;
+  }
+
+  /* ===================================================
+     FOOTER
+  =================================================== */
 
   .footer{
-    margin-top:5px;
-    padding:4px;
-    font-size:9px;
+    flex:none;
+    margin-top:2px;
+    padding:2px;
+    font-size:7px;
+    line-height:9px;
+  }
+
+  .footer br{
+    display:none;
+  }
+
+}
+
+/* =====================================================
+   RESULT PAGE - HIDE FOOTER WHEN RESULT IS OPEN
+===================================================== */
+
+@media (orientation:portrait) and (min-width:600px){
+
+  .container:has(#resultCard[style*="block"]) .footer{
+    display:none !important;
   }
 
 }
