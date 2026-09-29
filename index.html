@@ -1375,8 +1375,9 @@ function extractStaffId(text){
 }
 
 
+```javascript
 /* =====================================================
-   START SCANNER — FAST QR DETECTION
+   START SCANNER — VERY FAST QR DETECTION
 ===================================================== */
 
 function startScanner(){
@@ -1393,23 +1394,11 @@ function startScanner(){
 
   const config = {
 
-    /* =================================================
-       FAST QR DETECTION
-
-       Higher FPS means the camera checks for a QR
-       more frequently.
-    ================================================= */
-
-    fps:30,
+    /* Fast camera scanning */
+    fps: 30,
 
 
-    /* =================================================
-       LARGE DETECTION AREA
-
-       The QR can be detected over most of the camera
-       image instead of requiring precise positioning.
-    ================================================= */
-
+    /* Large detection area */
     qrbox:function(width,height){
 
       const size =
@@ -1425,11 +1414,13 @@ function startScanner(){
     },
 
 
-    /* =================================================
-       CAMERA ASPECT RATIO
-    ================================================= */
+    aspectRatio:1.0,
 
-    aspectRatio:1.0
+
+    /* Use the QR format only */
+    formatsToSupport:[
+      Html5QrcodeSupportedFormats.QR_CODE
+    ]
 
   };
 
@@ -1446,18 +1437,14 @@ function startScanner(){
 
     function(errorMessage){
 
-      /*
-         QR not found yet.
-         Ignore this because the scanner keeps
-         searching continuously.
-      */
+      /* Keep searching until QR is found */
 
     }
 
   ).then(function(){
 
     showScannerStatus(
-      "📷 READY — SHOW QR CARD TO CAMERA"
+      "📷 READY — SHOW QR CARD"
     );
 
   }).catch(function(error){
@@ -1477,7 +1464,7 @@ function startScanner(){
   });
 
 }
-
+```
 
 /* =====================================================
    QR SUCCESS
