@@ -119,8 +119,6 @@ body{
   overflow:hidden;
 }
 
-/* small top highlight */
-
 .summary-box::before{
   content:"";
   position:absolute;
@@ -132,16 +130,12 @@ body{
   border-radius:0 0 5px 5px;
 }
 
-/* NUMBER */
-
 .summary-number{
   font-size:26px;
   line-height:28px;
   font-weight:700;
   letter-spacing:.3px;
 }
-
-/* LABEL */
 
 .summary-label{
   font-size:10px;
@@ -494,7 +488,6 @@ body{
 
   /* ===================================================
      PROFESSIONAL SUMMARY
-     
      3 COLUMNS × 2 ROWS
   =================================================== */
 
@@ -992,7 +985,7 @@ body{
     <div id="reader"></div>
 
     <div id="scannerStatus">
-      📷 READY — SCAN STAFF QR CODE
+      📷 READY — SHOW QR CARD TO CAMERA
     </div>
 
   </div>
@@ -1395,7 +1388,7 @@ function extractStaffId(text){
 
 
 /* =====================================================
-   START SCANNER
+   START SCANNER — FAST QR DETECTION
 ===================================================== */
 
 function startScanner(){
@@ -1412,23 +1405,28 @@ function startScanner(){
 
   const config = {
 
-    /* ================================================
+    /* =================================================
        FAST QR DETECTION
-    ================================================ */
 
-    fps:20,
+       Higher FPS means the camera checks for a QR
+       more frequently.
+    ================================================= */
+
+    fps:30,
 
 
-    /* ================================================
-       LARGER QR DETECTION AREA
-    ================================================ */
+    /* =================================================
+       LARGE DETECTION AREA
+
+       The QR can be detected over most of the camera
+       image instead of requiring precise positioning.
+    ================================================= */
 
     qrbox:function(width,height){
 
       const size =
-        Math.min(
-          width * 0.82,
-          height * 0.82
+        Math.floor(
+          Math.min(width,height) * 0.92
         );
 
       return {
@@ -1439,9 +1437,9 @@ function startScanner(){
     },
 
 
-    /* ================================================
+    /* =================================================
        CAMERA ASPECT RATIO
-    ================================================ */
+    ================================================= */
 
     aspectRatio:1.0
 
@@ -1460,19 +1458,26 @@ function startScanner(){
 
     function(errorMessage){
 
-      /* QR searching errors are ignored */
+      /*
+         QR not found yet.
+         Ignore this because the scanner keeps
+         searching continuously.
+      */
 
     }
 
   ).then(function(){
 
     showScannerStatus(
-      "📷 READY — SCAN STAFF QR CODE"
+      "📷 READY — SHOW QR CARD TO CAMERA"
     );
 
   }).catch(function(error){
 
-    console.error(error);
+    console.error(
+      "Camera start error:",
+      error
+    );
 
     showScannerStatus(
       "❌ CAMERA PERMISSION REQUIRED",
@@ -1484,6 +1489,8 @@ function startScanner(){
   });
 
 }
+
+
 /* =====================================================
    QR SUCCESS
 ===================================================== */
@@ -1938,7 +1945,7 @@ async function scanNext(){
 
 
   showScannerStatus(
-    "📷 READY — SCAN STAFF QR CODE",
+    "📷 READY — SHOW QR CARD TO CAMERA",
     "success"
   );
 
@@ -1946,7 +1953,7 @@ async function scanNext(){
 
 
 /* =====================================================
-   AUTO NEXT SCAN
+   AUTO NEXT SCAN — 10 SECONDS
 ===================================================== */
 
 function startAutoNextScan(){
